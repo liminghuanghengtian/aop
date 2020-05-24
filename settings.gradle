@@ -1,0 +1,5 @@
+rootProject.name='InterviewDemo'
+include ':app'
+include ':aspectjcache'
+include ':builldsrc'
+include ':aspectjmonitor'

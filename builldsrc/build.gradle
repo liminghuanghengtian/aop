@@ -1,0 +1,34 @@
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'com.liminghuang.plugin'
+            artifactId 'cacheplugin'
+            version '1.0.1'
+
+            from components.java
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url uri('H:\\ASProjects\\Demo\\Repository')
+        }
+    }
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    //    implementation 'net.sf.proguard:proguard-gradle:5.2.1'
+    //    implementation 'org.apache.bcel:bcel:6.0'
+    implementation 'com.android.tools.build:gradle:3.0.1'
+    implementation 'com.squareup:javapoet:1.4.0'
+    implementation('org.aspectj:aspectjtools:1.8.+')
+    implementation('org.aspectj:aspectjweaver:1.8.+')
+    implementation('org.aspectj:aspectjrt:1.8.+')
+}

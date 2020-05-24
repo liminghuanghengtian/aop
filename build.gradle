@@ -1,0 +1,59 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        maven {
+            url uri('H:\\ASProjects\\Demo\\Repository')
+        }
+        // 改为阿里云的镜像地址
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter {
+            url 'https://jcenter.bintray.com'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.liminghuang.plugin:cacheplugin:1.0.1'
+
+        classpath 'org.aspectj:aspectjtools:1.8.+'
+        classpath 'org.aspectj:aspectjweaver:1.8.+'
+        //        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+        //        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url uri('H:\\ASProjects\\Demo\\Repository')
+        }
+        // 改为阿里云的镜像地址
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter {
+            url 'https://jcenter.bintray.com'
+        }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.2'
+    minSdkVersion = 16
+    targetSdkVersion = 29
+}
