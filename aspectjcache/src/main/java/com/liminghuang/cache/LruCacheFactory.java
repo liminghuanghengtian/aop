@@ -17,7 +17,7 @@ public class LruCacheFactory implements ICache.Factory {
     }
 
     @Override
-    public ICache create() {
+    public ICache createCache() {
         return new LruCacheImpl();
     }
 

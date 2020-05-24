@@ -9,7 +9,7 @@ import com.liminghuang.cache.ICache.Factory;
  * @version 2.6.0
  * @since 2.6.0
  */
-public class DefaultFactoryDecorate extends FactoryDecorator {
+public class DefaultFactoryDecorate extends AbsFactory {
     @Override
     public Factory makeFactory() {
         return new LruCacheFactory();

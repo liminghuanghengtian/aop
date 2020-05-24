@@ -8,25 +8,25 @@ package com.liminghuang.cache;
  * @version 2.6.0
  * @since 2.6.0
  */
-public abstract class FactoryDecorator implements ICache.Factory {
-    private final ICache.Factory factory;
+public abstract class AbsFactory implements ICache.Factory {
+    private final ICache.Factory mActualFactory;
 
-    public FactoryDecorator() {
-        factory = makeFactory();
+    public AbsFactory() {
+        mActualFactory = makeFactory();
     }
 
     @Override
-    public ICache create() {
-        if (factory != null) {
-            return factory.create();
+    public ICache createCache() {
+        if (mActualFactory != null) {
+            return mActualFactory.createCache();
         }
         return null;
     }
 
     @Override
     public String name() {
-        if (factory != null) {
-            return factory.name();
+        if (mActualFactory != null) {
+            return mActualFactory.name();
         }
         return "No-name";
     }

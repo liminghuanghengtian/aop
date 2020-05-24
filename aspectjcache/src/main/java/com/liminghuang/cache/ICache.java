@@ -26,7 +26,7 @@ public interface ICache<K, V> {
      * Component: 抽象构件。定义一个对象接口
      */
     interface Factory {
-        ICache create();
+        ICache createCache();
 
         String name();
     }

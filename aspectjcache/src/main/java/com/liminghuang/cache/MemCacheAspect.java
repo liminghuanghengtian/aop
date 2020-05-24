@@ -25,7 +25,7 @@ import java.util.List;
 @Aspect
 public class MemCacheAspect {
     private static final String TAG = "MemCacheAspect";
-    ICache mCache = new DefaultFactoryDecorate().makeFactory().create();
+    ICache mCache = FactoryManager.getInstance().getFactory().createCache();
     /**
      * 定义methodexecution的JPoint（JoinPoint）：标注了MemCache
      * 注解，且任意返回值，且任意参数个数和类型，且任意方法名称，且非MemCacheAspect类本身，且非构造器
