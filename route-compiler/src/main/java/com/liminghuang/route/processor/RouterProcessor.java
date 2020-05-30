@@ -97,7 +97,10 @@ public class RouterProcessor implements IProcess {
             if (targetE.getKind() == ElementKind.CLASS) {
                 TypeElement classElement = (TypeElement) targetE;
                 RouteTargetAnnotatedClass routeTargetAnnotatedClass =
-                        getRouteTargetAnnotatedClass(classElement, elementUtils, messager);
+                        getRouteTargetAnnotatedClass(classElement,
+                                routeModuleAnnotatedClass.getModuleInfo().getDomain(),
+                                elementUtils,
+                                messager);
 
                 if (routeTargetAnnClzList == null) {
                     routeTargetAnnClzList = new ArrayList<RouteTargetAnnotatedClass>();
@@ -126,12 +129,13 @@ public class RouterProcessor implements IProcess {
     }
 
     private RouteTargetAnnotatedClass getRouteTargetAnnotatedClass(TypeElement element,
+                                                                   String domain,
                                                                    Elements elementUtils,
                                                                    Messager messager) {
         String fullClassName = element.getQualifiedName().toString();
         RouteTargetAnnotatedClass annotatedClass = mTargetAnnotatedClassMap.get(fullClassName);
         if (annotatedClass == null) {
-            annotatedClass = new RouteTargetAnnotatedClass(element, elementUtils, messager);
+            annotatedClass = new RouteTargetAnnotatedClass(element, domain, elementUtils, messager);
             mTargetAnnotatedClassMap.put(fullClassName, annotatedClass);
         }
         return annotatedClass;

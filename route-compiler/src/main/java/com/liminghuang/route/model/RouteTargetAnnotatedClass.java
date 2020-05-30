@@ -21,7 +21,8 @@ public class RouteTargetAnnotatedClass {
     private TypeElement mClassElement;
     private RuleInfo mRuleInfo;
 
-    public RouteTargetAnnotatedClass(Element element, Elements elementUtils, Messager messager) throws IllegalArgumentException {
+    public RouteTargetAnnotatedClass(Element element, String domain, Elements elementUtils,
+                                     Messager messager) throws IllegalArgumentException {
         // 校验元素类型
         if (element.getKind() != ElementKind.CLASS) {
             String errorMsg = String.format("Only class can be annotated with @%s", RouteTarget.class.getSimpleName());
@@ -36,7 +37,8 @@ public class RouteTargetAnnotatedClass {
         mRuleInfo.setPackName(elementUtils.getPackageOf(mClassElement).getQualifiedName().toString());
         mRuleInfo.setQualified(mClassElement.getQualifiedName().toString());
         mRuleInfo.setScheme(routeTargetAnn.scheme());
-        mRuleInfo.setDomain(routeTargetAnn.domain());
+        mRuleInfo.setDomain(isDomainEmpty(routeTargetAnn.domain()) ? domain :
+                routeTargetAnn.domain());
         mRuleInfo.setPath(routeTargetAnn.target());
         messager.printMessage(Kind.NOTE, String.format("made RuleInfo -> %s",
                 mRuleInfo.toString()));
@@ -48,5 +50,9 @@ public class RouteTargetAnnotatedClass {
 
     public RuleInfo getRuleInfo() {
         return mRuleInfo;
+    }
+
+    private boolean isDomainEmpty(String domain) {
+        return domain == null || domain.length() == 0;
     }
 }
