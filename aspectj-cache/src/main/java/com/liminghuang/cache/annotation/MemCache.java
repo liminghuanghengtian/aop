@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
  * Description:
  *
  * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
- * @version 2.6.0
- * @since 2.6.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

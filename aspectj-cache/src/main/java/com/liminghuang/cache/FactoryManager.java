@@ -4,8 +4,8 @@ package com.liminghuang.cache;
  * Description:
  *
  * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
- * @version 2.6.0
- * @since 2.6.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class FactoryManager {
     private static volatile FactoryManager sInstance = null;

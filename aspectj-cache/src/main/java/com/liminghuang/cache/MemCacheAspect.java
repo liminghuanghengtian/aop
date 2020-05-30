@@ -19,8 +19,8 @@ import java.util.List;
  * Description: 定义切片及处理逻辑
  *
  * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
- * @version 2.6.0
- * @since 2.6.0
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @Aspect
 public class MemCacheAspect {
