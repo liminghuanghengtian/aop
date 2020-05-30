@@ -1,6 +1,6 @@
 {
    "class":"MainModule",
-   "targets":   {
+   "targets": {
       "main_page":"com.liminghuang.demo.MainActivity",
       "second_page":"com.liminghuang.demo.SecondActivity"
    }

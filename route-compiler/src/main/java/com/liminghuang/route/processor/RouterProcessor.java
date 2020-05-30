@@ -160,9 +160,6 @@ public class RouterProcessor implements IProcess {
 
     private void print(Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps, Messager messager) {
         File dir = new File("H://ASProjects/Demo/outputs");
-        if (dir.exists()) {
-            FileUtils.deleteAllFilesOfDir(dir);
-        }
         if (!dir.exists() && dir.mkdirs()) {
             messager.printMessage(Kind.NOTE, String.format("%s 创建成功", dir.getAbsolutePath()));
         }
@@ -174,6 +171,9 @@ public class RouterProcessor implements IProcess {
             // 创建文件
             File file = new File(dir,
                     key.getModuleInfo().getQualified().replaceAll("\\.", "_") + ".json");
+            if (file.exists()) {
+                FileUtils.deleteAllFilesOfDir(file);
+            }
             try {
                 /**
                  * 编写json文件内容
