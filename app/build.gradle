@@ -18,7 +18,9 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [eventBusIndex: 'com.liminghuang.demo.MyEventBusIndex']
+                arguments = [eventBusIndex: 'com.liminghuang.demo.MyEventBusIndex',
+                             isMain       : 'true',
+                             buildPath    : project.rootProject.buildDir.absolutePath]
             }
         }
     }
@@ -79,4 +81,5 @@ dependencies {
 
     implementation project(':aspectj-cache')
     implementation project(':route-lib')
+    annotationProcessor project(':route-compiler')
 }

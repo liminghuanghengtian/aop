@@ -6,6 +6,7 @@ import com.liminghuang.route.annotation.RouteModule;
 import com.liminghuang.route.annotation.RouteTarget;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -17,6 +18,8 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
+import javax.tools.Diagnostic.Kind;
 
 /**
  * 使用 Google 的 auto-service 库可以自动生成 META-INF/services/javax.annotation.processing.Processor 文件
@@ -38,14 +41,23 @@ public class RouteAnnProcessor extends AbstractProcessor {
         mFiler = processingEnv.getFiler();
         mElementUtils = processingEnv.getElementUtils();
         mMessager = processingEnv.getMessager();
+
+        // 在这里打印gradle文件传进来的参数
+        Map<String, String> map = processingEnv.getOptions();
+        for (String key : map.keySet()) {
+            mMessager.printMessage(Diagnostic.Kind.NOTE, "key" + ": " + map.get(key));
+        }
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        processingEnv.getLocale();
-        processingEnv.getSourceVersion();
+        mMessager.printMessage(Kind.NOTE, String.format("annotations: %s", annotations));
+        mMessager.printMessage(Kind.NOTE, String.format("locale: %s",
+                processingEnv.getLocale().toString()));
+        mMessager.printMessage(Kind.NOTE, String.format("sourceVersion: %s",
+                processingEnv.getSourceVersion().toString()));
         processingEnv.getTypeUtils();
-        processingEnv.getOptions();
+        mMessager.printMessage(Kind.NOTE, String.format("options: %s", processingEnv.getOptions()));
         new RouterProcessor().process(roundEnv, mFiler, mElementUtils, mMessager);
         return true;
     }
