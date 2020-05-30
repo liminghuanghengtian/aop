@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.liminghuang.cache.annotation.MemCache;
+import com.liminghuang.route.annotation.RouteTarget;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,6 +27,8 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+@RouteTarget(target = "/main", tag = "main_page", domain = "main", scheme = "customnative",
+        needLogin = true)
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 

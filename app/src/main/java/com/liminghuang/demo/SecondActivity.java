@@ -3,12 +3,15 @@ package com.liminghuang.demo;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.liminghuang.route.annotation.RouteTarget;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@RouteTarget(target = "/second", tag = "second_page", needLogin = false)
 public class SecondActivity extends AppCompatActivity {
     private static final String TAG = "SecondActivity";
 

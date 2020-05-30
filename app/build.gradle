@@ -77,5 +77,6 @@ dependencies {
     //        targetGenDir 'src/main/java'
     //    }
 
-    implementation project(':aspectjcache')
+    implementation project(':aspectj-cache')
+    implementation project(':route-lib')
 }
