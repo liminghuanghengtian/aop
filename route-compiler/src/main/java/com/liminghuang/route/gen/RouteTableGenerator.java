@@ -85,8 +85,6 @@ public class RouteTableGenerator {
                         .build();
 
         String packageName = elementUtils.getPackageOf(moduleAnnClz.getClassElement()).getQualifiedName().toString();
-        messager.printMessage(Kind.NOTE, String.format("start to generate class-{%s}",
-                generateClzName));
         messager.printMessage(Kind.NOTE, String.format("class-{%s} will be generate at(pkg same " +
                         "as %s): %s",
                 generateClzName, moduleAnnClz.getModuleInfo().getSimpleName(), packageName));

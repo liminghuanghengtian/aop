@@ -1,8 +1,0 @@
-{
-class:"MainModule",
-fields:
-   {
- main_page:"com.liminghuang.demo.MainActivity",
- second_page:"com.liminghuang.demo.SecondActivity"
-   }
-}

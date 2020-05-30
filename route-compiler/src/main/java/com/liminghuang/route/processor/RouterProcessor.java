@@ -5,6 +5,7 @@ import com.liminghuang.route.annotation.RouteTarget;
 import com.liminghuang.route.gen.RouteTableGenerator;
 import com.liminghuang.route.model.RouteModuleAnnotatedClass;
 import com.liminghuang.route.model.RouteTargetAnnotatedClass;
+import com.liminghuang.route.util.FileUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -159,6 +160,9 @@ public class RouterProcessor implements IProcess {
 
     private void print(Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps, Messager messager) {
         File dir = new File("H://ASProjects/Demo/outputs");
+        if (dir.exists()) {
+            FileUtils.deleteAllFilesOfDir(dir);
+        }
         if (!dir.exists() && dir.mkdirs()) {
             messager.printMessage(Kind.NOTE, String.format("%s 创建成功", dir.getAbsolutePath()));
         }
@@ -169,35 +173,32 @@ public class RouterProcessor implements IProcess {
         for (RouteModuleAnnotatedClass key : maps.keySet()) {
             // 创建文件
             File file = new File(dir,
-                    key.getModuleInfo().getQualified().replaceAll("\\.", "_") + ".txt");
+                    key.getModuleInfo().getQualified().replaceAll("\\.", "_") + ".json");
             try {
                 /**
                  * 编写json文件内容
                  */
                 FileWriter fw = new FileWriter(file);
                 fw.append("{\n")
-                        .append("class:")
-                        .append("\"")
-                        .append(key.getModuleInfo().getSimpleName())
-                        .append("\"")
+                        .append("   ")
+                        .append("\"").append("class").append("\"").append(":")
+                        .append("\"").append(key.getModuleInfo().getSimpleName()).append("\"")
                         .append(",\n");
-                fw.append("fields:\n")
-                        .append("   {\n");
+                fw.append("   ")
+                        .append("\"").append("targets").append("\"").append(":").append(" {\n");
                 List<RouteTargetAnnotatedClass> targetList = maps.get(key);
 
                 for (int i = 0; i < targetList.size(); i++) {
                     RouteTargetAnnotatedClass target = targetList.get(i);
-                    fw.append(" ")
-                            .append(target.getRuleInfo().getKey())
-                            .append(":")
-                            .append("\"" + target.getRuleInfo().getQualified() + "\"");
+                    fw.append("      ")
+                            .append("\"").append(target.getRuleInfo().getKey()).append("\"").append(":")
+                            .append("\"").append(target.getRuleInfo().getQualified()).append("\"");
                     if (i < targetList.size() - 1) {
                         fw.append(",");
                         fw.append("\n");
                     }
                 }
-                fw.append("\n   }\n");
-                fw.append("}");
+                fw.append("\n").append("   }\n").append("}");
                 fw.flush();
                 fw.close();
             } catch (IOException e) {
