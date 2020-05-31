@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup:javapoet:1.10.0'
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    // gradle在5.0以后为了加快编译速度，跳过的自定义增量编译，你需要手动添加annotationProcessor实现生成自定义注解相关文件
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
     implementation project(':route-lib')
 }
