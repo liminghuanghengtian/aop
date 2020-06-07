@@ -4,11 +4,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.liminghuang.cache.annotation.MemCache;
 import com.liminghuang.route.annotation.RouteTarget;
+import com.liminghuang.viewfinder.ViewFinder;
+import com.liminghuang.viewfinder.annotation.BindView;
+import com.liminghuang.viewfinder.annotation.OnClick;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,6 +40,85 @@ public class MainActivity extends AppCompatActivity {
 
     static {
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
+    }
+
+    /**
+     * 注解测试
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    @MemCache(key = "calculate")
+    private int calculate(int x, int y) {
+        Log.i(TAG, "execute calculate...");
+        return x + y;
+    }
+
+    @BindView(value = R.id.tv_content)
+    private TextView mContentView;
+
+    @OnClick(value = R.id.tv_content)
+    public void onContentViewClick(View view) {
+        Toast.makeText(this, "id: " + view.getId() + " is clicked", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(value = R.id.tv_title)
+    public void onTitleViewClick() {
+        Toast.makeText(this, "title is clicked", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ViewFinder.inject(this);
+
+        calculate(1, 3);
+
+        async();
+        rx();
+        startActivity(new Intent(this, SecondActivity.class));
+
+        TestMessage msg = new TestMessage();
+        msg.setSeq(new Random().nextInt());
+        Log.d(TAG, msg.toString());
+        EventBus.getDefault().postSticky(msg);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * eventbus测试
+     *
+     * @param msg
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void onMessage(TestMessage msg) {
+        Log.d(TAG, "onMessage: " + msg.toString());
+        Glide.with(this)
+                .load("https://blog.csdn.net/hxl517116279")
+                .into(new ImageView(this));
+    }
+
+    /**
+     * eventbus测试
+     *
+     * @param obj
+     */
+    @Subscribe
+    public void onNotify(Object obj) {
+
     }
 
     /**
@@ -96,70 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-    }
-
-    /**
-     * 注解测试
-     *
-     * @param x
-     * @param y
-     * @return
-     */
-    @MemCache(key = "calculate")
-    private int calculate(int x, int y) {
-        Log.i(TAG, "execute calculate...");
-        return x + y;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        calculate(1, 3);
-
-        async();
-        rx();
-        startActivity(new Intent(this, SecondActivity.class));
-
-        TestMessage msg = new TestMessage();
-        msg.setSeq(new Random().nextInt());
-        Log.d(TAG, msg.toString());
-        EventBus.getDefault().postSticky(msg);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * eventbus测试
-     *
-     * @param msg
-     */
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
-    public void onMessage(TestMessage msg) {
-        Log.d(TAG, "onMessage: " + msg.toString());
-        Glide.with(this)
-                .load("https://blog.csdn.net/hxl517116279")
-                .into(new ImageView(this));
-    }
-
-    /**
-     * eventbus测试
-     *
-     * @param obj
-     */
-    @Subscribe
-    public void onNotify(Object obj) {
-
     }
 
     private static class MainAsyncTask extends AsyncTask<Integer, Integer, String> {

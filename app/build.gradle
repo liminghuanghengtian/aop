@@ -79,7 +79,13 @@ dependencies {
     //        targetGenDir 'src/main/java'
     //    }
 
+    // 切面
     implementation project(':aspectj-cache')
+    // 路由
     implementation project(':route-lib')
     annotationProcessor project(':route-compiler')
+    // 视图绑定
+    implementation project(':viewfinder')
+    implementation project(':viewfinder-annotation')
+    annotationProcessor project(':viewfinder-compiler')
 }
