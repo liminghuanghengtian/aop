@@ -19,6 +19,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath 'com.liminghuang.plugin:cacheplugin:1.0.1'
+        classpath 'com.liminghuang.plugin:logplugin:1.0.0'
 
         classpath 'org.aspectj:aspectjtools:1.8.+'
         classpath 'org.aspectj:aspectjweaver:1.8.+'
