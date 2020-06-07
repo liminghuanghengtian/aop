@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'cacheaspectj'
+apply plugin: 'com.liminghuang.log-plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion

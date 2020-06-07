@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Description: 注解-设置点击事件.
  * <p>对方法进行注解，接收一组 int 类型参数，相当于给一组 View 指定点击响应事件</p>
  *
- * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
+ * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0
  * @since 1.0.0
  */

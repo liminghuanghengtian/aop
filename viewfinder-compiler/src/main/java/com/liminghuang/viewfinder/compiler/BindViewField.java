@@ -11,7 +11,7 @@ import javax.lang.model.type.TypeMirror;
 /**
  * Description: View注解内容.
  *
- * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
+ * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0
  * @since 1.0.0
  */
