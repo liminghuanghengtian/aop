@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @BindView(value = R.id.tv_content)
-    private TextView mContentView;
+    TextView mContentView;
 
     @OnClick(value = R.id.tv_content)
     public void onContentViewClick(View view) {
