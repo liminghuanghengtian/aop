@@ -1,4 +1,4 @@
-rootProject.name='InterviewDemo'
+rootProject.name='AOP'
 include ':app'
 include ':aspectj-cache'
 include ':builldsrc'

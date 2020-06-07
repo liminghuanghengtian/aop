@@ -15,13 +15,14 @@ import java.util.List;
  */
 @RouteModule(domain = "app")
 public class MainModule extends AbsRouteModule {
+
     @Override
     public List<RouteRule> collectExtRules() {
         return null;
     }
 
     @Override
-    public String domain() {
+    public String authority() {
         return "app";
     }
 }

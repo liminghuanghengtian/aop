@@ -5,7 +5,7 @@ import com.liminghuang.route.RouteRule;
 import java.util.List;
 
 /**
- * Description:
+ * Description: 路由模块抽象.
  *
  * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
  * @version 1.0.0
@@ -31,5 +31,5 @@ public interface IRouteModule {
      *
      * @return
      */
-    String domain();
+    String authority();
 }

@@ -9,4 +9,5 @@ package com.liminghuang.route.gen;
  */
 public class Types {
     public static final String ROUTE_RULE = "RouteRule";
+    public static final String ROUTE_RULE_BUILDER = "RouteRule.Builder";
 }

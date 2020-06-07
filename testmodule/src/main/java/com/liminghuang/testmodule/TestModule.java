@@ -21,7 +21,7 @@ public class TestModule extends AbsRouteModule {
     }
 
     @Override
-    public String domain() {
+    public String authority() {
         return "test_module";
     }
 }

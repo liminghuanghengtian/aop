@@ -3,7 +3,9 @@ package com.liminghuang.route.bean;
 import java.util.Objects;
 
 /**
- * Description: {scheme}://{domain}{path}{query}
+ * Description: 描述如下路由地址信息.
+ * <p>模板：{scheme}://{domain}/{path}?{query}</p>
+ * </p>语法格式：[scheme:][//authority][path][?query][#fragment]</p>
  *
  * @author <a href="mailto:huanglm@guahao.com">Adaministrator</a>
  * @version 1.0.0
