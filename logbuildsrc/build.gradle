@@ -5,8 +5,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId 'com.liminghuang.plugin'
-            artifactId 'cacheplugin'
-            version '1.0.1'
+            artifactId 'logplugin'
+            version '1.0.0'
 
             from components.java
         }
@@ -24,10 +24,6 @@ publishing {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    //    implementation 'net.sf.proguard:proguard-gradle:5.2.1'
-    //    implementation 'org.apache.bcel:bcel:6.0'
     implementation 'com.android.tools.build:gradle:3.0.1'
-    implementation('org.aspectj:aspectjtools:1.8.+')
-    implementation('org.aspectj:aspectjweaver:1.8.+')
-    implementation('org.aspectj:aspectjrt:1.8.+')
+    compile 'org.javassist:javassist:3.20.0-GA'
 }
