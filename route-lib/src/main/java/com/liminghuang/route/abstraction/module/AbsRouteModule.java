@@ -13,6 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class AbsRouteModule implements IRouteModule {
+
     @Override
     public List<RouteRule> collectRules() {
         List<RouteRule> rules = new ArrayList<>();

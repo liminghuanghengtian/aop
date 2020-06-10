@@ -2,6 +2,7 @@ package com.liminghuang.route.processor;
 
 import com.liminghuang.route.annotation.RouteModule;
 import com.liminghuang.route.annotation.RouteTarget;
+import com.liminghuang.route.gen.ModuleProxyGenerator;
 import com.liminghuang.route.gen.RouteTableGenerator;
 import com.liminghuang.route.model.RouteModuleAnnotatedClass;
 import com.liminghuang.route.model.RouteTargetAnnotatedClass;
@@ -157,6 +158,7 @@ public class RouterProcessor implements IProcess {
                 messager.printMessage(Kind.NOTE, String.format("Generating file for module{%s}",
                         key.getClassElement().getSimpleName()));
                 new RouteTableGenerator(key, maps.get(key), elementUtils, messager).generate().writeTo(filer);
+                new ModuleProxyGenerator(key, maps.get(key), elementUtils, messager).generate().writeTo(filer);
             } catch (IOException e) {
                 messager.printMessage(Kind.ERROR, String.format("Generate file failed, reason: %s",
                         e.getMessage()));
