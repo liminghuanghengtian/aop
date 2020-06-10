@@ -16,7 +16,7 @@ publishing {
 publishing {
     repositories {
         maven {
-            url uri('H:\\ASProjects\\Demo\\Repository')
+            url uri('../../Repository')
         }
     }
 }

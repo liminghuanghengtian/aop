@@ -4,7 +4,7 @@ buildscript {
 
     repositories {
         maven {
-            url uri('H:\\ASProjects\\Demo\\Repository')
+            url uri('./Repository')
         }
         // 改为阿里云的镜像地址
         maven { url 'https://maven.aliyun.com/repository/google' }
@@ -34,7 +34,7 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            url uri('H:\\ASProjects\\Demo\\Repository')
+            url uri('./Repository')
         }
         // 改为阿里云的镜像地址
         maven { url 'https://maven.aliyun.com/repository/google' }
