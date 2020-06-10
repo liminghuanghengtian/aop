@@ -1,0 +1,7 @@
+{
+   "class":"TestModule",
+   "targets": {
+      "first_page":"com.liminghuang.testmodule.FirstActivity",
+      "second_page":"com.liminghuang.testmodule.SecondActivity"
+   }
+}

@@ -38,6 +38,12 @@ public class RouterProcessor implements IProcess {
     private Map<String, RouteTargetAnnotatedClass> mTargetAnnotatedClassMap = new HashMap<>();
     Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps = null;
 
+    private final String outputPath;
+
+    RouterProcessor(String outputPath) {
+        this.outputPath = outputPath;
+    }
+
     @Override
     public boolean process(RoundEnvironment roundEnv, Filer filer, Elements elementUtils,
                            Messager messager) {
@@ -159,7 +165,11 @@ public class RouterProcessor implements IProcess {
     }
 
     private void print(Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps, Messager messager) {
-        File dir = new File("H://ASProjects/Demo/outputs");
+        if (outputPath == null || outputPath.length() == 0) {
+            return;
+        }
+
+        File dir = new File(outputPath);
         if (!dir.exists() && dir.mkdirs()) {
             messager.printMessage(Kind.NOTE, String.format("%s 创建成功", dir.getAbsolutePath()));
         }

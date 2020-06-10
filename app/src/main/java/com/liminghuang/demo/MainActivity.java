@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.liminghuang.cache.annotation.MemCache;
 import com.liminghuang.route.annotation.RouteTarget;
+import com.liminghuang.route.inject.annotation.Query;
 import com.liminghuang.viewfinder.ViewFinder;
 import com.liminghuang.viewfinder.annotation.BindView;
 import com.liminghuang.viewfinder.annotation.OnClick;
@@ -22,7 +23,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Random;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(value = R.id.tv_content)
     TextView mContentView;
 
+    @Query(key = "who")
+    String whoLaunch;
+
     @OnClick(value = R.id.tv_content)
     public void onContentViewClick(View view) {
         Toast.makeText(this, "id: " + view.getId() + " is clicked", Toast.LENGTH_LONG).show();
@@ -90,6 +96,18 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
     }
 
     @Override

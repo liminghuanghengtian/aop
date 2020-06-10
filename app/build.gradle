@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
-apply plugin: 'cacheaspectj'
+apply plugin: 'cacheaspectj'// aspectj插件
 apply plugin: 'com.liminghuang.log-plugin'
 
 android {
@@ -89,4 +89,8 @@ dependencies {
     implementation project(':viewfinder')
     implementation project(':viewfinder-annotation')
     annotationProcessor project(':viewfinder-compiler')
+    // 路由参数注入
+    implementation project(':route-injector')
+    annotationProcessor project(':injector-compiler')
+    implementation 'org.aspectj:aspectjrt:1.8.+'
 }
