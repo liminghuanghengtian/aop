@@ -2,6 +2,7 @@ package com.liminghuang.route.processor;
 
 import com.liminghuang.route.annotation.RouteModule;
 import com.liminghuang.route.annotation.RouteTarget;
+import com.liminghuang.route.gen.ModuleCompositionGenerator;
 import com.liminghuang.route.gen.ModuleProxyGenerator;
 import com.liminghuang.route.gen.RouteTableGenerator;
 import com.liminghuang.route.model.RouteModuleAnnotatedClass;
@@ -40,9 +41,11 @@ public class RouterProcessor implements IProcess {
     Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps = null;
 
     private final String outputPath;
+    private final boolean isMain;
 
-    RouterProcessor(String outputPath) {
+    RouterProcessor(String outputPath, boolean isMain) {
         this.outputPath = outputPath;
+        this.isMain = isMain;
     }
 
     @Override
@@ -163,6 +166,14 @@ public class RouterProcessor implements IProcess {
                 messager.printMessage(Kind.ERROR, String.format("Generate file failed, reason: %s",
                         e.getMessage()));
             }
+        }
+        if (isMain) {
+            // try {
+            //     messager.printMessage(Kind.ERROR, "Generating file for main app module");
+            //     // new ModuleCompositionGenerator(elementUtils, messager).generate().writeTo(filer);
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            // }
         }
     }
 

@@ -1,14 +1,11 @@
 package com.liminghuang.route.gen;
 
-import com.liminghuang.route.abstraction.module.IRouteModule;
 import com.liminghuang.route.model.RouteModuleAnnotatedClass;
 import com.liminghuang.route.model.RouteTargetAnnotatedClass;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.Date;
@@ -18,7 +15,6 @@ import javax.annotation.processing.Messager;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
-import javax.tools.FileObject;
 
 /**
  * ProjectName: AOP

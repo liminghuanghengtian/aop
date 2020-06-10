@@ -58,8 +58,10 @@ public class RouteAnnProcessor extends AbstractProcessor {
                 processingEnv.getSourceVersion().toString()));
         processingEnv.getTypeUtils();
         mMessager.printMessage(Kind.NOTE, String.format("options: %s", processingEnv.getOptions()));
-        return new RouterProcessor(processingEnv.getOptions().get("buildPath")).process(roundEnv, mFiler, mElementUtils,
-                mMessager);
+
+        return new RouterProcessor(processingEnv.getOptions().get("buildPath"),
+                Boolean.parseBoolean(processingEnv.getOptions().get("isMain")))
+                .process(roundEnv, mFiler, mElementUtils, mMessager);
     }
 
     /**
