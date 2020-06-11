@@ -26,6 +26,8 @@ public class RuleInfo {
     private String query;
     /** 映射键 */
     private String key;
+    /** 是否需要登录 */
+    private boolean needLogin;
 
     public String getScheme() {
         return scheme;
@@ -83,6 +85,14 @@ public class RuleInfo {
         this.key = key;
     }
 
+    public boolean isNeedLogin() {
+        return needLogin;
+    }
+
+    public void setNeedLogin(boolean needLogin) {
+        this.needLogin = needLogin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -108,11 +118,12 @@ public class RuleInfo {
         return "RuleInfo{" +
                 "scheme='" + scheme + '\'' +
                 ", domain='" + domain + '\'' +
-                ", path='" + path + '\'' +
-                ", query='" + query + '\'' +
                 ", packName='" + packName + '\'' +
                 ", qualified='" + qualified + '\'' +
+                ", path='" + path + '\'' +
+                ", query='" + query + '\'' +
                 ", key='" + key + '\'' +
+                ", needLogin=" + needLogin +
                 '}';
     }
 }

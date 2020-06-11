@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import static com.liminghuang.route.Constants.NATIVE_SCHEME;
 
 /**
- * Description:
+ * Description: 路由页面注解.
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0

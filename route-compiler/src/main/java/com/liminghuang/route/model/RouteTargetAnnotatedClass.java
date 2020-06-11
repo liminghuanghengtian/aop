@@ -40,6 +40,7 @@ public class RouteTargetAnnotatedClass {
         mRuleInfo.setDomain(isDomainEmpty(routeTargetAnn.domain()) ? domain :
                 routeTargetAnn.domain());
         mRuleInfo.setPath(routeTargetAnn.target());
+        mRuleInfo.setNeedLogin(routeTargetAnn.needLogin());
         messager.printMessage(Kind.NOTE, String.format("made RuleInfo -> %s",
                 mRuleInfo.toString()));
     }

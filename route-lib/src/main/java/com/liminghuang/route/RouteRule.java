@@ -10,6 +10,8 @@ import java.net.URI;
  * @since 1.0.0
  */
 public class RouteRule {
+    /** 路由模式 */
+    private Mode mode;
     /** 路由协议 */
     private String scheme;
     /** 域名-模块名称 */
@@ -22,6 +24,12 @@ public class RouteRule {
     private String key;
     /** 统一资源定位符 */
     private URI uri;
+    /** 是否需要登录 */
+    private boolean needLogin;
+
+    public Mode getMode() {
+        return mode;
+    }
 
     public String getScheme() {
         return scheme;
@@ -47,7 +55,24 @@ public class RouteRule {
         return uri;
     }
 
+    public boolean needLogin() {
+        return needLogin;
+    }
+
+    public enum Mode {
+        NATIVE(Constants.MODE_NATIVE),
+        H5(Constants.MODE_H5);
+
+        private String desc;
+
+        Mode(String desc) {
+            this.desc = desc;
+        }
+    }
+
     public static class Builder {
+        /** 路由模式 */
+        private Mode mode;
         /** 路由协议 */
         private String scheme;
         /** 域名-模块名称 */
@@ -58,6 +83,13 @@ public class RouteRule {
         private String path;
         /** 映射键 */
         private String key;
+        /** 是否需要登录 */
+        private boolean needLogin;
+
+        public Builder setMode(Mode mode) {
+            this.mode = mode;
+            return this;
+        }
 
         public Builder setScheme(String scheme) {
             this.scheme = scheme;
@@ -84,13 +116,20 @@ public class RouteRule {
             return this;
         }
 
+        public Builder setNeedLogin(boolean needLogin) {
+            this.needLogin = needLogin;
+            return this;
+        }
+
         public RouteRule build() {
             RouteRule rule = new RouteRule();
+            rule.mode = this.mode;
             rule.scheme = this.scheme;
             rule.authority = this.authority;
             rule.path = this.path;
             rule.key = this.key;
             rule.qualified = this.qualified;
+            rule.needLogin = this.needLogin;
             StringBuilder builder = new StringBuilder();
             builder.append(scheme).append("://").append(authority).append("/").append(path);
             System.out.println("uri str -> " + builder.toString());

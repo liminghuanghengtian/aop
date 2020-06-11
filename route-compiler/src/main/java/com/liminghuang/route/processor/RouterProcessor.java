@@ -161,7 +161,7 @@ public class RouterProcessor implements IProcess {
                 messager.printMessage(Kind.NOTE, String.format("Generating file for module{%s}",
                         key.getClassElement().getSimpleName()));
                 new RouteTableGenerator(key, maps.get(key), elementUtils, messager).generate().writeTo(filer);
-                new ModuleProxyGenerator(key, maps.get(key), elementUtils, messager).generate().writeTo(filer);
+                new ModuleProxyGenerator(key, elementUtils, messager).generate().writeTo(filer);
             } catch (IOException e) {
                 messager.printMessage(Kind.ERROR, String.format("Generate file failed, reason: %s",
                         e.getMessage()));

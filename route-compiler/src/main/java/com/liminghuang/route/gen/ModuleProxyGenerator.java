@@ -27,15 +27,12 @@ import javax.tools.Diagnostic;
  */
 public class ModuleProxyGenerator {
     private RouteModuleAnnotatedClass moduleAnnClz;
-    private List<RouteTargetAnnotatedClass> targetAnnClzs;
     private Elements elementUtils;
     private Messager messager;
 
     public ModuleProxyGenerator(RouteModuleAnnotatedClass moduleAnnClz,
-                                List<RouteTargetAnnotatedClass> targetAnnClzs,
                                 Elements elementUtils, Messager messager) {
         this.moduleAnnClz = moduleAnnClz;
-        this.targetAnnClzs = targetAnnClzs;
         this.elementUtils = elementUtils;
         this.messager = messager;
     }

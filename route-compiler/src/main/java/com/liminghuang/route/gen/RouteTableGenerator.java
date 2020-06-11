@@ -44,9 +44,6 @@ public class RouteTableGenerator {
 
     public JavaFile generate() {
         AtomicInteger order = new AtomicInteger(0);
-        ClassName routeRuleBuilderClzName = ClassName.get("com.liminghuang.route",
-                Types.ROUTE_RULE_BUILDER);
-
         // generate method
         messager.printMessage(Kind.NOTE, "start to generate method-{collectRules}");
         MethodSpec.Builder methodCollectRulesBuilder = MethodSpec.methodBuilder("collectRules")
@@ -62,13 +59,17 @@ public class RouteTableGenerator {
         for (RouteTargetAnnotatedClass target : targetAnnClzs) {
             CodeBlock.Builder ruleBuilder = CodeBlock.builder();
             int seq = order.incrementAndGet();
-            ruleBuilder.addStatement("$T builder$L = new $T()", routeRuleBuilderClzName, seq,
-                    routeRuleBuilderClzName);
+            ruleBuilder.addStatement("$T builder$L = new $T()", Types.CLZ_ROUTE_RULE_BUILDER, seq,
+                    Types.CLZ_ROUTE_RULE_BUILDER);
+            // 路由注解配置的都是native的路由
+            ruleBuilder.addStatement("builder$L.setMode($T.$N)", seq, Types.CLZ_ROUTE_RULE_MODE, elementUtils.getName(
+                    Types.ROUTE_RULE_MODE_NATIVE));
             ruleBuilder.addStatement("builder$L.setScheme($S)", seq, target.getRuleInfo().getScheme());
             ruleBuilder.addStatement("builder$L.setAuthority($S)", seq, target.getRuleInfo().getDomain());
             ruleBuilder.addStatement("builder$L.setPath($S)", seq, target.getRuleInfo().getPath());
             ruleBuilder.addStatement("builder$L.setKey($S)", seq, target.getRuleInfo().getKey());
             ruleBuilder.addStatement("builder$L.setQualified($S)", seq, target.getRuleInfo().getQualified());
+            ruleBuilder.addStatement("builder$L.setNeedLogin($L)", seq, target.getRuleInfo().isNeedLogin());
             ruleBuilder.addStatement("rules.add(builder$L.build())", seq);
             ruleBuilder.add(CodeBlock.builder().add("/* rule$L added into rules*/\n", seq).build());
             methodCollectRulesBuilder.addCode(ruleBuilder.build());
