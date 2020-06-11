@@ -51,7 +51,8 @@ public class AnnotatedClass {
     }
 
     MethodSpec.Builder makeMethodOnCreate() {
-        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S", "execution(* *.onCreate(..))");
+        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S",
+                String.format("execution(* %s.onCreate(..))", getFullClassName()));
         AnnotationSpec annotationSpec = AnnotationSpec.builder(Around.class)
                 .addMember("value", codeBlockBuilder.build()).build();
         MethodSpec.Builder onCreateMethodBuilder = MethodSpec.methodBuilder("onCreate")
@@ -67,27 +68,28 @@ public class AnnotatedClass {
         onCreateMethodBuilder.addStatement("$T saveBundle = ($T)joinPoint.getArgs()[0]", InjectTypeName.CLZ_BUNDLE,
                 InjectTypeName.CLZ_BUNDLE);
         onCreateMethodBuilder.addStatement("$T targetBundle = target.getIntent().getExtras()", InjectTypeName.CLZ_BUNDLE);
-        onCreateMethodBuilder.addStatement("if(targetBundle != null) {")
-                .addStatement("dataBundle.putAll(targetBundle)")
-                .addStatement("}");
-        onCreateMethodBuilder.addStatement("if(saveBundle != null) {")
-                .addStatement("dataBundle.putAll(saveBundle)")
-                .addStatement("}");
-        onCreateMethodBuilder.addStatement("try {");
+        onCreateMethodBuilder.addCode("if(targetBundle != null) {\n")
+                .addStatement("\tdataBundle.putAll(targetBundle)")
+                .addCode("}\n");
+        onCreateMethodBuilder.addCode("if(saveBundle != null) {\n")
+                .addStatement("\tdataBundle.putAll(saveBundle)")
+                .addCode("}\n");
+        onCreateMethodBuilder.addCode("try {\n");
         for (QueryField queryField : mFields) {
-            onCreateMethodBuilder.addStatement("target.$N = dataBundle.get$L($S)", queryField.getFieldName(),
+            onCreateMethodBuilder.addStatement("\ttarget.$N = dataBundle.get$L($S)", queryField.getFieldName(),
                     queryField.getFieldTypeSimpleName(),
                     queryField.getKey());
         }
-        onCreateMethodBuilder.addStatement("} catch($T e) {", InjectTypeName.CLZ_EXCEPTION)
-                .addStatement("e.printStackTrace()")
-                .addStatement("}");
+        onCreateMethodBuilder.addCode("} catch($T e) {\n", InjectTypeName.CLZ_EXCEPTION)
+                .addStatement("\te.printStackTrace()")
+                .addCode("}\n");
         onCreateMethodBuilder.addStatement("joinPoint.proceed()");
         return onCreateMethodBuilder;
     }
 
     MethodSpec.Builder makeMethodOnSaveInstanceState() {
-        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S", "execution(* *.onSaveInstanceState(..))");
+        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S",
+                String.format("execution(* %s.onSaveInstanceState(..))", getFullClassName()));
         AnnotationSpec annotationSpec = AnnotationSpec.builder(After.class)
                 .addMember("value", codeBlockBuilder.build()).build();
         MethodSpec.Builder onSaveInstanceStateMethodBuilder = MethodSpec.methodBuilder("onSaveInstanceState")
@@ -113,7 +115,8 @@ public class AnnotatedClass {
     }
 
     MethodSpec.Builder makeMethodOnNewIntent() {
-        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S", "execution(* *.onNewIntent(..))");
+        CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S",
+                String.format("execution(* %s.onNewIntent(..))", getFullClassName()));
         AnnotationSpec annotationSpec = AnnotationSpec.builder(Around.class)
                 .addMember("value", codeBlockBuilder.build()).build();
         MethodSpec.Builder onNewIntentMethodBuilder = MethodSpec.methodBuilder("onNewIntent")
@@ -128,15 +131,15 @@ public class AnnotatedClass {
         onNewIntentMethodBuilder.addStatement("$T targetIntent = ($T)joinPoint.getArgs()[0]", InjectTypeName.CLZ_INTENT,
                 InjectTypeName.CLZ_INTENT);
         onNewIntentMethodBuilder.addStatement("$T dataBundle = targetIntent.getExtras()", InjectTypeName.CLZ_BUNDLE);
-        onNewIntentMethodBuilder.addStatement("try {");
+        onNewIntentMethodBuilder.addCode("try {\n");
         for (QueryField queryField : mFields) {
-            onNewIntentMethodBuilder.addStatement("target.$N = dataBundle.get$L($S)", queryField.getFieldName(),
+            onNewIntentMethodBuilder.addStatement("\ttarget.$N = dataBundle.get$L($S)", queryField.getFieldName(),
                     queryField.getFieldTypeSimpleName(),
                     queryField.getKey());
         }
-        onNewIntentMethodBuilder.addStatement("} catch($T e) {", InjectTypeName.CLZ_EXCEPTION)
-                .addStatement("e.printStackTrace()")
-                .addStatement("}");
+        onNewIntentMethodBuilder.addCode("} catch($T e) {\n", InjectTypeName.CLZ_EXCEPTION)
+                .addStatement("\te.printStackTrace()")
+                .addCode("}\n");
         onNewIntentMethodBuilder.addStatement("joinPoint.proceed()");
         return onNewIntentMethodBuilder;
     }
