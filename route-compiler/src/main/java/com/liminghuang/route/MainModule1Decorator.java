@@ -11,9 +11,9 @@ import java.util.List;
  * Description: 每个模块对自身的装饰.
  * CreateDate: 2020/6/10 7:34 PM
  *
- * @author: <a href="mailto:liming.huang@tuya.com"">colin</a>
- * @version: 3.18.0
- * @since: 3.18.0
+ * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 public class MainModule1Decorator implements IRouteModule {
     private IRouteModule target;

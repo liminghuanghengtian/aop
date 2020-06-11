@@ -1,13 +1,10 @@
 package com.liminghuang.route.gen;
 
-import com.liminghuang.route.model.RouteModuleAnnotatedClass;
-import com.liminghuang.route.model.RouteTargetAnnotatedClass;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Modifier;
@@ -19,9 +16,9 @@ import javax.tools.Diagnostic;
  * Description: app主模块进行下述合成.
  * CreateDate: 2020/6/10 8:51 PM
  *
- * @author: <a href="mailto:liming.huang@tuya.com"">colin</a>
- * @version: 3.18.0
- * @since: 3.18.0
+ * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 public class ModuleCompositionGenerator {
     private Elements elementUtils;

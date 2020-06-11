@@ -11,9 +11,9 @@ import java.util.List;
  * Description: 需要apt生成的类. 上层反射这个类，获取完整的路由
  * CreateDate: 2020/6/10 7:22 PM
  *
- * @author: <a href="mailto:liming.huang@tuya.com"">colin</a>
- * @version: 3.18.0
- * @since: 3.18.0
+ * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 public class Module1Generator implements IModuleGenerator {
     @Override

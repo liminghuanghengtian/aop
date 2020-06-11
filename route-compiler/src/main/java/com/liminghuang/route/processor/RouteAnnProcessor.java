@@ -45,7 +45,7 @@ public class RouteAnnProcessor extends AbstractProcessor {
         // 在这里打印gradle文件传进来的参数
         Map<String, String> map = processingEnv.getOptions();
         for (String key : map.keySet()) {
-            mMessager.printMessage(Diagnostic.Kind.NOTE, "key" + ": " + map.get(key));
+            mMessager.printMessage(Diagnostic.Kind.NOTE, key + ": " + map.get(key));
         }
     }
 

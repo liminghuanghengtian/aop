@@ -1,14 +1,10 @@
 package com.liminghuang.route.gen;
 
-import com.liminghuang.route.abstraction.collector.IRouteCollector;
 import com.liminghuang.route.model.RouteModuleAnnotatedClass;
 import com.liminghuang.route.model.RouteTargetAnnotatedClass;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.Date;
@@ -71,7 +67,7 @@ public class RouteTableGenerator {
             ruleBuilder.addStatement("builder$L.setQualified($S)", seq, target.getRuleInfo().getQualified());
             ruleBuilder.addStatement("builder$L.setNeedLogin($L)", seq, target.getRuleInfo().isNeedLogin());
             ruleBuilder.addStatement("rules.add(builder$L.build())", seq);
-            ruleBuilder.add(CodeBlock.builder().add("/* rule$L added into rules*/\n", seq).build());
+            ruleBuilder.add(CodeBlock.builder().add("/* rule$L added into rules. */\n", seq).build());
             methodCollectRulesBuilder.addCode(ruleBuilder.build());
         }
         methodCollectRulesBuilder.addStatement("return rules");

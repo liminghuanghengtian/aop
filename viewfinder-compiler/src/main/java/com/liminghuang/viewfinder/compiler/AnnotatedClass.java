@@ -68,7 +68,7 @@ class AnnotatedClass {
                 .addParameter(TypeName.OBJECT, "source")
                 .addParameter(TypeUtil.PROVIDER, "provider");
 
-        injectMethodBuilder.addStatement("/* Here is bind view. */");
+        injectMethodBuilder.addComment("Here is bind view.");
         // find views. 查找BindView注解标注value对应的视图
         for (BindViewField field : mFields) {
             injectMethodBuilder.addStatement("host.$N = ($T)(provider.findView(source, $L))", field.getFieldName(),
@@ -76,7 +76,7 @@ class AnnotatedClass {
         }
 
         if (mMethods.size() > 0) {
-            injectMethodBuilder.addStatement("/* Here is set OnClickListener. */");
+            injectMethodBuilder.addComment("Here is set OnClickListener.");
             injectMethodBuilder.addStatement("$T listener", TypeUtil.ANDROID_ON_CLICK_LISTENER);
         }
         for (OnClickMethod method : mMethods) {

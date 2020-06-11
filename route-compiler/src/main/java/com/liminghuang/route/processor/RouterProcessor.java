@@ -38,8 +38,10 @@ public class RouterProcessor implements IProcess {
     private static final String TAG = "RouterProcessor";
     private Map<String, RouteModuleAnnotatedClass> mModuleAnnotatedClassMap = new HashMap<>();
     private Map<String, RouteTargetAnnotatedClass> mTargetAnnotatedClassMap = new HashMap<>();
+    /** 以模块类的Element作为key，映射模块内所有的路由节点Element */
     Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps = null;
 
+    // 选项参数
     private final String outputPath;
     private final boolean isMain;
 
@@ -167,13 +169,14 @@ public class RouterProcessor implements IProcess {
                         e.getMessage()));
             }
         }
+
         if (isMain) {
-            // try {
-            //     messager.printMessage(Kind.ERROR, "Generating file for main app module");
-            //     // new ModuleCompositionGenerator(elementUtils, messager).generate().writeTo(filer);
-            // } catch (IOException e) {
-            //     e.printStackTrace();
-            // }
+            messager.printMessage(Kind.NOTE, String.format("Generating file for isMain=true module -> {%s}", "app"));
+            try {
+                new ModuleCompositionGenerator(elementUtils, messager).generate().writeTo(filer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
