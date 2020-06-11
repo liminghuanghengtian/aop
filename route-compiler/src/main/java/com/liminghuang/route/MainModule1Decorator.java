@@ -28,6 +28,7 @@ public class MainModule1Decorator implements IRouteModule {
         IRouteCollector collector =
                 null;
         try {
+            // 同模块内可以直接new，不需要反射的方式
             collector = (IRouteCollector) Class.forName("com.liminghuang.demo.RouteCollector_" + target.authority()).newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();

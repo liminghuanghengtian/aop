@@ -3,6 +3,8 @@ package com.liminghuang.route;
 import com.liminghuang.route.abstraction.IModuleGenerator;
 import com.liminghuang.route.abstraction.module.IRouteModule;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +22,13 @@ public class Module1Generator implements IModuleGenerator {
     public List<IRouteModule> getModules() {
         List<IRouteModule> modules = new ArrayList<>();
         try {
-            modules.add((IRouteModule) (Class.forName("com.liminghuang.demo.MainModuleProxy").newInstance()));
+            IRouteModule module;
+            Class clz = Class.forName("com.liminghuang.demo.MainModuleDecorator");
+            Constructor c = clz.getConstructor(/*IRouteModule.class*/);
+            module = (IRouteModule) c.newInstance();
+            modules.add(module);
             modules.add((IRouteModule) (Class.forName("com.liminghuang.testmodule.TestModuleProxy").newInstance()));
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return modules;

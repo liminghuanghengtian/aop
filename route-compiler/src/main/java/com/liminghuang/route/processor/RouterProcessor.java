@@ -173,7 +173,7 @@ public class RouterProcessor implements IProcess {
         if (isMain) {
             messager.printMessage(Kind.NOTE, String.format("Generating file for isMain=true module -> {%s}", "app"));
             try {
-                new ModuleCompositionGenerator(elementUtils, messager).generate().writeTo(filer);
+                new ModuleCompositionGenerator(outputPath,elementUtils, messager).generate().writeTo(filer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
