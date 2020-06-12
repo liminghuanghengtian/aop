@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
-apply plugin: 'cacheaspectj'// aspectj插件
+apply plugin: 'cacheaspectj' // aspectj插件
 //apply plugin: 'com.liminghuang.log-plugin'
+//或者这样也可以
+apply plugin: 'com.hujiang.android-aspectjx'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -37,6 +39,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+aspectjx {
+    //排除所有package路径中包含`android.support`的class文件及库（jar文件）
+    include 'com.liminghuang'
 }
 
 dependencies {
