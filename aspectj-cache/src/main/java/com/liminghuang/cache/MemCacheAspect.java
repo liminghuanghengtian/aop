@@ -16,7 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import java.util.List;
 
 /**
- * Description: 定义切片及处理逻辑
+ * Description: 定义缓存切片及处理逻辑.
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0

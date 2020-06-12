@@ -17,7 +17,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath 'com.liminghuang.plugin:cacheplugin:1.0.1'
         classpath 'com.liminghuang.plugin:logplugin:1.0.0'
 

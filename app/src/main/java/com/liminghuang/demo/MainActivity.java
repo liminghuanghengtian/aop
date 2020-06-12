@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(value = R.id.tv_content)
     public void onContentViewClick(View view) {
-        Toast.makeText(this, "id: " + view.getId() + " is clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "id: " + view.getId() + " is clicked，go to SecondActivity",
+                Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, SecondActivity.class));
     }
 
     @OnClick(value = R.id.tv_title)

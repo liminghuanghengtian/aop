@@ -2,6 +2,9 @@ package com.liminghuang.demo;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.liminghuang.route.annotation.RouteTarget;
 
@@ -19,6 +22,8 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        TextView tv = findViewById(R.id.tv_content);
+        tv.setOnClickListener(new MyOnClickListener());
     }
 
     @Override
@@ -26,6 +31,17 @@ public class SecondActivity extends AppCompatActivity {
         super.onStart();
         EventBus.getDefault().register(this);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
 
     @Override
     public void onStop() {
@@ -36,5 +52,12 @@ public class SecondActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED, sticky = true)
     public void onRecvMessage(TestMessage msg) {
         Log.d(TAG, "onRecvMessage: " + msg.toString());
+    }
+
+    private static class MyOnClickListener implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, "按钮被点击了");
+        }
     }
 }

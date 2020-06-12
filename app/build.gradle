@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'cacheaspectj'// aspectj插件
-apply plugin: 'com.liminghuang.log-plugin'
+//apply plugin: 'com.liminghuang.log-plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -82,6 +82,7 @@ dependencies {
 
     // 切面
     implementation project(':aspectj-cache')
+    implementation project(':aspectj-stats')
     // 路由
     implementation project(':route-lib')
     annotationProcessor project(':route-compiler')
