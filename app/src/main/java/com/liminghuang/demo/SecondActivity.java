@@ -14,15 +14,20 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * 所有以on开头的方法都会被注入打印方法的代码.
+ */
 @RouteTarget(target = "/second", tag = "second_page", needLogin = false)
 public class SecondActivity extends AppCompatActivity {
     private static final String TAG = "SecondActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         TextView tv = findViewById(R.id.tv_content);
+        // fixme 以下的方法调用会被切面替换掉执行逻辑
         tv.setOnClickListener(new MyOnClickListener());
     }
 
