@@ -95,8 +95,8 @@ dependencies {
     //    }
 
     // 切面
-    implementation project(':aspectj-cache')
-    implementation project(':aspectj-stats')
+    implementation project(':vinda-cache')
+    implementation project(':vinda-stats')
     // 路由
     implementation project(':route-lib')
     annotationProcessor project(':route-compiler')
