@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.liminghuang.cache.annotation.MemCache;
 import com.liminghuang.route.annotation.RouteTarget;
@@ -22,9 +25,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Random;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public void onContentViewClick(View view) {
         Toast.makeText(this, "id: " + view.getId() + " is clicked，go to SecondActivity",
                 Toast.LENGTH_LONG).show();
+        calculate(1,3);
         startActivity(new Intent(this, SecondActivity.class));
     }
 

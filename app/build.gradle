@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
-//apply plugin: 'cacheaspectj' // aspectj插件
+apply plugin: 'cacheaspectj' // aspectj插件
 //apply plugin: 'com.liminghuang.log-plugin'
 //或者这样也可以
 apply plugin: 'com.hujiang.android-aspectjx'
@@ -47,7 +47,7 @@ android {
 
 aspectjx {
     // 切面的几个Aspect类也需要include
-    include 'com.liminghuang.*'
+    include 'com.liminghuang'
     //排除所有package路径中包含`android.support`的class文件及库（jar文件）
     exclude 'androidx', 'io', 'com.bumptech'
     enabled true
