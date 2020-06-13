@@ -1,4 +1,4 @@
-package com.liminghuang.cache.plugin
+package com.liminghuang.vinda.plugin
 
 
 import org.aspectj.bridge.IMessage
@@ -8,21 +8,40 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 
-public class CachePlugin implements Plugin<Project> {
+public class VindaAspectjxPlugin implements Plugin<Project> {
 
     @Override
-    void apply(Project target) {
-        final def log = target.logger
-        target.dependencies {
+    void apply(Project project) {
+        def hasApp = project.plugins.withType(AppPlugin)
+        def hasLib = project.plugins.withType(LibraryPlugin)
+        if (!hasApp && !hasLib) {
+            throw new IllegalStateException("'android' or 'android-library' plugin required.")
+        }
+
+        final def log = project.logger
+        final def variants
+        if (hasApp) {
+            variants = project.android.applicationVariants
+        } else {
+            variants = project.android.libraryVariants
+        }
+
+        project.dependencies {
             log.debug "download dependencies: aspectjrt"
             implementation('org.aspectj:aspectjrt:1.8.+')
         }
+        project.extensions.create('vinda', VindaExtension)
 
         log.error "============================="
-        log.error "Aspectj start Weaving Class!"
+        log.error "VindaAspectjxPlugin start weaving Class!"
         log.error "============================="
 
-        target.android.applicationVariants.all { variant ->
+        variants.all { variant ->
+            if (!project.vinda.enabled) {
+                log.debug("vinda is disabled.")
+                return;
+            }
+
             JavaCompile javaCompile = variant.javaCompile
             log.info 'javaCompile'
             javaCompile.doLast {
@@ -32,7 +51,7 @@ public class CachePlugin implements Plugin<Project> {
                                  "-aspectpath", javaCompile.classpath.asPath,
                                  "-d", javaCompile.destinationDir.toString(),
                                  "-classpath", javaCompile.classpath.asPath,
-                                 "-bootclasspath", target.android.bootClasspath.join(
+                                 "-bootclasspath", project.android.bootClasspath.join(
                         File.pathSeparator)]
                 log.debug "ajc args: " + Arrays.toString(args)
 
