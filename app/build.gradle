@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
-apply plugin: 'cacheaspectj' // aspectj插件
-//apply plugin: 'com.liminghuang.log-plugin'
-//或者这样也可以
 apply plugin: 'com.hujiang.android-aspectjx'
+apply plugin: 'com.liminghuang.vinda-plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -43,6 +41,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+vinda {
+    enabled true
 }
 
 aspectjx {
@@ -108,4 +110,8 @@ dependencies {
     implementation project(':route-injector')
     annotationProcessor project(':injector-compiler')
     implementation 'org.aspectj:aspectjrt:1.8.+'
+}
+//  解决build警告：编码GBK的不可映射字符
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }

@@ -18,12 +18,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
-//        classpath 'com.novoda:bintray-release:0.8.0'
+        //        classpath 'com.novoda:bintray-release:0.8.0'
         // gradle4.5以上使用以下两行配置替换bintray-release
         classpath "guru.stefma.bintrayrelease:bintrayrelease:1.1.2"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.17"
-
-        classpath 'com.liminghuang.plugin:cacheplugin:1.0.1'
+        // 从cacheplugin1.0.1转变成vinda-plugin1.0.2
+        classpath 'com.liminghuang.plugin:vinda-plugin:1.0.2'
         classpath 'com.liminghuang.plugin:logplugin:1.0.0'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'
         classpath 'org.aspectj:aspectjtools:1.8.+'
@@ -52,7 +52,8 @@ allprojects {
         mavenCentral()
     }
 
-    tasks.withType(Javadoc) {//解决lib中中文乱码问题
+    tasks.withType(Javadoc) {
+        //解决lib中中文乱码问题
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
     }

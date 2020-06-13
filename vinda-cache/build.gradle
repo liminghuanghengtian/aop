@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'com.novoda.bintray-release'
 apply plugin: "guru.stefma.bintrayrelease"
+apply plugin: 'com.liminghuang.vinda-plugin'
 
 version = "1.0.0" //版本号
 group = "com.liminghuang" //jcenter的路径
@@ -39,6 +40,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+vinda{
+    enabled true
 }
 
 dependencies {

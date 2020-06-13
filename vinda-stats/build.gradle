@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.liminghuang.vinda-plugin'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -21,6 +22,10 @@ android {
         }
     }
 
+}
+
+vinda{
+    enabled true
 }
 
 dependencies {
