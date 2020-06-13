@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
         async();
         rx();
-        startActivity(new Intent(this, SecondActivity.class));
 
         TestMessage msg = new TestMessage();
         msg.setSeq(new Random().nextInt());

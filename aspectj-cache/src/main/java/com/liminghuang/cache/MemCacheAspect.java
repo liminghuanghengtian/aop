@@ -6,7 +6,6 @@ import android.util.Log;
 import com.liminghuang.cache.annotation.MemCache;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -44,10 +43,10 @@ public class MemCacheAspect {
 
     }
 
-    @After("methodAnnotated(ann)")
+    /*@After("methodAnnotated(ann)")
     public void afterJoinPoint(ProceedingJoinPoint joinPoint, MemCache ann) {
         Log.d(TAG, "afterJoinPoint: " + joinPoint.toString() + ", at: " + joinPoint.getSourceLocation());
-    }
+    }*/
 
     @Before("methodAnnotated(ann)")
     public void beforeJoinPoint(ProceedingJoinPoint joinPoint, MemCache ann) {

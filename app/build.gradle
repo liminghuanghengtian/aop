@@ -29,6 +29,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -42,8 +46,10 @@ android {
 }
 
 aspectjx {
+    include 'com.liminghuang.demo'
     //排除所有package路径中包含`android.support`的class文件及库（jar文件）
-    include 'com.liminghuang'
+    exclude 'androidx', 'io', 'com.bumptech'
+    enabled true
 }
 
 dependencies {
