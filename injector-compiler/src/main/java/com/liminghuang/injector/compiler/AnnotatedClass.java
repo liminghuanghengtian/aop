@@ -8,8 +8,8 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +53,7 @@ public class AnnotatedClass {
     MethodSpec.Builder makeMethodOnCreate() {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S",
                 String.format("execution(* %s.onCreate(..))", getFullClassName()));
-        AnnotationSpec annotationSpec = AnnotationSpec.builder(Before.class)
+        AnnotationSpec annotationSpec = AnnotationSpec.builder(Around.class)
                 .addMember("value", codeBlockBuilder.build()).build();
         MethodSpec.Builder onCreateMethodBuilder = MethodSpec.methodBuilder("onCreate")
                 .addModifiers(Modifier.PUBLIC)
@@ -117,7 +117,7 @@ public class AnnotatedClass {
     MethodSpec.Builder makeMethodOnNewIntent() {
         CodeBlock.Builder codeBlockBuilder = CodeBlock.builder().add("$S",
                 String.format("execution(* %s.onNewIntent(..))", getFullClassName()));
-        AnnotationSpec annotationSpec = AnnotationSpec.builder(Before.class)
+        AnnotationSpec annotationSpec = AnnotationSpec.builder(Around.class)
                 .addMember("value", codeBlockBuilder.build()).build();
         MethodSpec.Builder onNewIntentMethodBuilder = MethodSpec.methodBuilder("onNewIntent")
                 .addModifiers(Modifier.PUBLIC)
