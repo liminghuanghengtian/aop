@@ -1,4 +1,18 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'com.novoda.bintray-release'
+apply plugin: "guru.stefma.bintrayrelease"
+
+version = "1.0.0" //版本号
+group = "com.liminghuang" //jcenter的路径
+publish {
+    repoName = 'vinda'
+    userOrg = 'liminghuang'//bintray.com用户名
+//    groupId = 'com.liminghuang'//jcenter上的路径
+    artifactId = 'vinda-cache'//项目名称
+//    publishVersion = '1.0.0'//版本号
+    desc = 'cache bas on aspectj'//描述，不重要
+    website = 'https://github.com/liminghuanghengtian/aop'//网站，最好有，不重要
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
