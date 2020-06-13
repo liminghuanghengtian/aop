@@ -1,6 +1,7 @@
 package com.liminghuang.vinda.plugin
 
-
+import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.LibraryPlugin
 import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
@@ -8,7 +9,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 
-public class VindaAspectjxPlugin implements Plugin<Project> {
+public class VindaPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
@@ -33,7 +34,7 @@ public class VindaAspectjxPlugin implements Plugin<Project> {
         project.extensions.create('vinda', VindaExtension)
 
         log.error "============================="
-        log.error "VindaAspectjxPlugin start weaving Class!"
+        log.error "VindaPlugin start weaving Class!"
         log.error "============================="
 
         variants.all { variant ->
