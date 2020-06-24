@@ -112,6 +112,7 @@ dependencies {
     implementation project(':route-injector')
     annotationProcessor project(':injector-compiler')
     implementation 'org.aspectj:aspectjrt:1.8.+'
+    implementation project(':testmodule')
 }
 //  解决build警告：编码GBK的不可映射字符
 tasks.withType(JavaCompile) {

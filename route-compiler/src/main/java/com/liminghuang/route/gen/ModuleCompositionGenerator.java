@@ -1,5 +1,6 @@
 package com.liminghuang.route.gen;
 
+import com.liminghuang.route.processor.RouterProcessor;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -40,15 +41,15 @@ public class ModuleCompositionGenerator {
             return;
         }
 
-        File dir = new File(outputPath);
-        if (dir.exists() && dir.isDirectory()) {
-            messager.printMessage(Diagnostic.Kind.NOTE, String.format("%s is directory", dir.getAbsolutePath()));
-            File[] fileList = dir.listFiles();
+        File routerDir = new File(outputPath+ RouterProcessor.ROUTE_DIR);
+        if (routerDir.exists() && routerDir.isDirectory()) {
+            messager.printMessage(Diagnostic.Kind.NOTE, String.format("%s is directory", routerDir.getAbsolutePath()));
+            File[] fileList = routerDir.listFiles();
             if (fileList != null) {
                 builder.addStatement("$T module", Types.CLZ_IROUTE_MODULE);
                 for (File f : fileList) {
                     messager.printMessage(Diagnostic.Kind.NOTE, String.format("filename: %s", f.getName()));
-                    String fileName = f.getName().replace("_", ".");
+                    String fileName = f.getName();
                     String canonicalModuleClzName = fileName.substring(0, fileName.lastIndexOf("."));
                     messager.printMessage(Diagnostic.Kind.NOTE, String.format("ModuleClzName: %s", canonicalModuleClzName));
                     String pkg = canonicalModuleClzName.substring(0, canonicalModuleClzName.lastIndexOf("."));

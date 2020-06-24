@@ -40,6 +40,8 @@ public class RouterProcessor implements IProcess {
     private Map<String, RouteTargetAnnotatedClass> mTargetAnnotatedClassMap = new HashMap<>();
     /** 以模块类的Element作为key，映射模块内所有的路由节点Element */
     Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps = null;
+    public static final String ROUTE_DIR = "/router";
+    public static final String TABLE_DIR = "/rules";
 
     // 选项参数
     private final String outputPath;
@@ -156,6 +158,7 @@ public class RouterProcessor implements IProcess {
 
 
     private void generateCodes(Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps, Filer filer, Elements elementUtils, Messager messager) {
+        output(maps, messager);
         print(maps, messager);
         // 遍历maps
         for (RouteModuleAnnotatedClass key : maps.keySet()) {
@@ -173,9 +176,34 @@ public class RouterProcessor implements IProcess {
         if (isMain) {
             messager.printMessage(Kind.NOTE, String.format("Generating file for isMain=true module -> {%s}", "app"));
             try {
-                new ModuleCompositionGenerator(outputPath,elementUtils, messager).generate().writeTo(filer);
+                new ModuleCompositionGenerator(outputPath, elementUtils, messager).generate().writeTo(filer);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private void output(Map<RouteModuleAnnotatedClass, List<RouteTargetAnnotatedClass>> maps, Messager messager) {
+        if (outputPath == null || outputPath.length() == 0) {
+            return;
+        }
+
+        String routerDir = outputPath + ROUTE_DIR;
+        File routerDirFile = new File(routerDir);
+        if (!routerDirFile.exists() && routerDirFile.mkdirs()) {
+            messager.printMessage(Kind.NOTE, String.format("%s 创建成功", routerDirFile.getAbsolutePath()));
+        } else {
+            messager.printMessage(Kind.NOTE, String.format("%s 已存在或创建失败", routerDirFile.getAbsolutePath()));
+        }
+
+        // 遍历map
+        for (RouteModuleAnnotatedClass key : maps.keySet()) {
+            // 创建路由名文件
+            File routerFile = new File(routerDirFile, key.getModuleInfo().getQualified() + ".router");
+            if (!routerFile.exists() && routerFile.mkdir()) {
+                messager.printMessage(Kind.NOTE, String.format("%s 创建成功", routerFile.getAbsolutePath()));
+            } else {
+                messager.printMessage(Kind.ERROR, String.format("%s 已存在或创建失败", routerFile.getAbsolutePath()));
             }
         }
     }
@@ -185,26 +213,30 @@ public class RouterProcessor implements IProcess {
             return;
         }
 
-        File dir = new File(outputPath);
-        if (!dir.exists() && dir.mkdirs()) {
-            messager.printMessage(Kind.NOTE, String.format("%s 创建成功", dir.getAbsolutePath()));
+        String tableDir = outputPath + TABLE_DIR;
+        File tableDirFile = new File(tableDir);
+        if (!tableDirFile.exists() && tableDirFile.mkdirs()) {
+            messager.printMessage(Kind.NOTE, String.format("%s 创建成功", tableDirFile.getAbsolutePath()));
+        } else {
+            messager.printMessage(Kind.NOTE, String.format("%s 已存在或创建失败", tableDirFile.getAbsolutePath()));
         }
-        messager.printMessage(Kind.NOTE, String.format("print route table to %s",
-                dir.getAbsolutePath()));
 
         // 遍历map
         for (RouteModuleAnnotatedClass key : maps.keySet()) {
             // 创建文件
-            File file = new File(dir,
+            File routeTableFile = new File(tableDirFile,
                     key.getModuleInfo().getQualified().replaceAll("\\.", "_") + ".json");
-            if (file.exists()) {
-                FileUtils.deleteAllFilesOfDir(file);
+            // 多次重新build时可能会存在，出问题时会存在多个module
+            if (routeTableFile.exists()) {
+                FileUtils.deleteAllFilesOfDir(routeTableFile);
             }
+
             try {
+                messager.printMessage(Kind.NOTE, String.format("print route table to %s", tableDirFile.getAbsolutePath()));
                 /**
                  * 编写json文件内容
                  */
-                FileWriter fw = new FileWriter(file);
+                FileWriter fw = new FileWriter(routeTableFile);
                 fw.append("{\n")
                         .append("   ")
                         .append("\"").append("class").append("\"").append(":")
