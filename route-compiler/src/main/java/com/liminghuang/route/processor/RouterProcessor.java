@@ -188,6 +188,7 @@ public class RouterProcessor implements IProcess {
             return;
         }
 
+        // 创建目录
         String routerDir = outputPath + ROUTE_DIR;
         File routerDirFile = new File(routerDir);
         if (!routerDirFile.exists() && routerDirFile.mkdirs()) {
@@ -198,12 +199,12 @@ public class RouterProcessor implements IProcess {
 
         // 遍历map
         for (RouteModuleAnnotatedClass key : maps.keySet()) {
-            // 创建路由名文件
+            // 创建模块路由名文件
             File routerFile = new File(routerDirFile, key.getModuleInfo().getQualified() + ".router");
             if (!routerFile.exists() && routerFile.mkdir()) {
                 messager.printMessage(Kind.NOTE, String.format("%s 创建成功", routerFile.getAbsolutePath()));
             } else {
-                messager.printMessage(Kind.ERROR, String.format("%s 已存在或创建失败", routerFile.getAbsolutePath()));
+                messager.printMessage(Kind.NOTE, String.format("%s 已存在或创建失败", routerFile.getAbsolutePath()));
             }
         }
     }

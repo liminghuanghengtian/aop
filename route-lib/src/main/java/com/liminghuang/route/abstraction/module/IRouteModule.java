@@ -1,6 +1,7 @@
 package com.liminghuang.route.abstraction.module;
 
 import com.liminghuang.route.RouteRule;
+import com.liminghuang.route.abstraction.collector.IRouteCollector;
 
 import java.util.List;
 
@@ -11,13 +12,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface IRouteModule {
-    /**
-     * 收集路由.
-     *
-     * @return
-     */
-    List<RouteRule> collectRules();
+public interface IRouteModule extends IRouteCollector {
 
     /**
      * 上层嵌入路由.

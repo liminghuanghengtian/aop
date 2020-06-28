@@ -12,5 +12,10 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface IRouteCollector {
+    /**
+     * 收集路由.
+     *
+     * @return
+     */
     List<RouteRule> collectRules();
 }
