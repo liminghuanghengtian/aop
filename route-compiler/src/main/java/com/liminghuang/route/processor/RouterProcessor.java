@@ -233,7 +233,7 @@ public class RouterProcessor implements IProcess {
             }
 
             try {
-                messager.printMessage(Kind.NOTE, String.format("print route table to %s", tableDirFile.getAbsolutePath()));
+                messager.printMessage(Kind.NOTE, String.format("print route table to %s", routeTableFile.getAbsolutePath()));
                 /**
                  * 编写json文件内容
                  */
