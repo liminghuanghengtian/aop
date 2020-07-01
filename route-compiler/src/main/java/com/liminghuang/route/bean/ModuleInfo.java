@@ -1,9 +1,11 @@
 package com.liminghuang.route.bean;
 
+import com.liminghuang.route.annotation.RouteModule;
+
 import java.util.Objects;
 
 /**
- * Description:
+ * Description: {@link RouteModule}注解信息解析存储.
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0

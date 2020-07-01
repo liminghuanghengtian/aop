@@ -1,11 +1,14 @@
 package com.liminghuang.route.bean;
 
+import com.liminghuang.route.annotation.RouteTarget;
+
 import java.util.Objects;
 
 /**
- * Description: 描述如下路由地址信息.
+ * Description: {@link RouteTarget}注解信息解析存储.
+ * 描述如下路由地址信息.
  * <p>模板：{scheme}://{domain}/{path}?{query}</p>
- * </p>语法格式：[scheme:][//authority][path][?query][#fragment]</p>
+ * <p>url语法格式：[scheme:][//authority][path][?query][#fragment]</p>
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0

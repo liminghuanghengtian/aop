@@ -5,7 +5,7 @@ import com.liminghuang.route.abstraction.module.IRouteModule;
 import java.util.List;
 
 /**
- * Description: 模块收集器.
+ * Description: 模块组合.
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0

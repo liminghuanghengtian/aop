@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Description:
+ * Description: 路由模块注解.
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0
