@@ -25,11 +25,14 @@ APT是一种处理注释的工具，能够对源代码文件检测并找出其�
 ## 核心设计
 - 两个注解：@RouteTarget、@RouteModule
 - 四个抽象：IRouteCollector、IRouteModule、AbsRouteModule、IModuleGenerator
-- 中间代码生成：RouteTableGenerator、ModuleProxyGenerator、ModuleCompositionGenerator
+- 中间代码生成器：RouteTableGenerator、ModuleProxyGenerator、ModuleCompositionGenerator
+
+![抽象设计](./doc/route_abstract.jpeg)
+
 ### 设计思想
 1. 收集各个模块的路由信息，形成模块内的路由表
 2. 组合各模块的路由表，形成总路由表
 3. 各模块可定制额外的路由规则
-### 设计模式
-1. 装饰模式（门面模式）
-2. 构建者模式
+### 思路
+1. url路径规范 see RuleInfo（注解信息的存储）
+2. 
