@@ -7,8 +7,10 @@ import java.util.Objects;
 /**
  * Description: {@link RouteTarget}注解信息解析存储.
  * 描述如下路由地址信息.
- * <p>模板：{scheme}://{domain}/{path}?{query}</p>
- * <p>url语法格式：[scheme:][//authority][path][?query][#fragment]</p>
+ * <p>模板：{scheme}://{domain}:{port}{path}?{query}</p>
+ * <p>url语法格式：[scheme:]scheme-specific-part[#fragment]
+ * [scheme:][//authority][path][?query][#fragment]
+ * [scheme:][//host:port][path][?query][#fragment]</p>
  *
  * @author <a href="mailto:1569642270@qq.com">Adaministrator</a>
  * @version 1.0.0
@@ -19,13 +21,15 @@ public class RuleInfo {
     private String scheme;
     /** 域名-模块名称 */
     private String domain;
+    /** host:port的形式 */
+    private String authority;
     /** 包名 */
     private String packName;
     /** 全限定路径 */
     private String qualified;
     /** 形如：/triple/baidu */
     private String path;
-    /** 形如：？clientId=sdafaf&name=afghaggs */
+    /** 形如：?clientId=sdafaf&name=afghaggs */
     private String query;
     /** 映射键 */
     private String key;
@@ -46,6 +50,14 @@ public class RuleInfo {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public String getPackName() {
@@ -121,6 +133,7 @@ public class RuleInfo {
         return "RuleInfo{" +
                 "scheme='" + scheme + '\'' +
                 ", domain='" + domain + '\'' +
+                ", authority='" + authority + '\'' +
                 ", packName='" + packName + '\'' +
                 ", qualified='" + qualified + '\'' +
                 ", path='" + path + '\'' +

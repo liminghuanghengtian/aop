@@ -14,7 +14,9 @@ public class RouteRule {
     private Mode mode;
     /** 路由协议 */
     private String scheme;
-    /** 域名-模块名称 */
+    /** 域名-注解的模块名称 */
+    private String domain;
+    /** 形如：host:port，目前基本使用domain */
     private String authority;
     /** 全限定路径 */
     private String qualified;
@@ -35,8 +37,16 @@ public class RouteRule {
         return scheme;
     }
 
+    public String getDomain() {
+        return domain;
+    }
+
     public String getAuthority() {
         return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public String getQualified() {
@@ -75,7 +85,9 @@ public class RouteRule {
         private Mode mode;
         /** 路由协议 */
         private String scheme;
-        /** 域名-模块名称 */
+        /** 域名-注解的模块名称 */
+        private String domain;
+        /** 形如：host:port，目前基本使用domain */
         private String authority;
         /** 全限定路径 */
         private String qualified;
@@ -93,6 +105,11 @@ public class RouteRule {
 
         public Builder setScheme(String scheme) {
             this.scheme = scheme;
+            return this;
+        }
+
+        public Builder setDomain(String domain) {
+            this.domain = domain;
             return this;
         }
 
@@ -125,13 +142,15 @@ public class RouteRule {
             RouteRule rule = new RouteRule();
             rule.mode = this.mode;
             rule.scheme = this.scheme;
+            rule.domain = this.domain;
             rule.authority = this.authority;
             rule.path = this.path;
             rule.key = this.key;
             rule.qualified = this.qualified;
             rule.needLogin = this.needLogin;
             StringBuilder builder = new StringBuilder();
-            builder.append(scheme).append("://").append(authority).append("/").append(path);
+            // 规范：[scheme:][//authority][path][?query][#fragment]，path自带斜杆"/"
+            builder.append(scheme).append("://").append(authority).append(path);
             System.out.println("uri str -> " + builder.toString());
             rule.uri = URI.create(builder.toString());
             return rule;

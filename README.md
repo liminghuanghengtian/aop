@@ -41,24 +41,25 @@ APT是一种处理注释的工具，能够对源代码文件检测并找出其�
 2. 通过编译选项isMain来指定主模块，各模块路由信息通过编译选项buildPath统一输出到指定路径下，例如此处为project的build/router目录下。以此来实现主模块的路由组合功能
 
 ### 生成什么样的中间代码？
-1. RouteTableGenerator生成：RouteCollector_{domain}.class
-2. ModuleProxyGenerator生成：{ModuleClzSimpleName}Decorator.class
-3. ModuleCompositionGenerator生成：ModuleComposition.class，这个类只在最上层的模块生成，例如：app模块
+1. RouteTableGenerator生成：RouteCollector_{domain}.java
+2. ModuleProxyGenerator生成：{ModuleClzSimpleName}Decorator.java
+3. ModuleCompositionGenerator生成：ModuleComposition.java，这个类只在最上层的模块生成，例如：app模块
 
 ### Element
 java类的结构类比前端的dom结构，每个元素有相应的节点类型，分别代表了包、类、方法等等。
-```
-package com.example;
+```java
+package com.example; // PackageElement
 
 public class Foo { // TypeElement
 
     private int a; // VariableElement
     private Foo other; // VariableElement
 
-    public Foo() {} // ExecuteableElement
+    public Foo() {} // ExecutableElement
 
-    public void setA( // ExecutableElement
-            int newA // TypeElement
-    ) 
+    // ExecutableElement
+    public void setA( 
+        int newA // VariableElement
+    ) {}
 }
 ```

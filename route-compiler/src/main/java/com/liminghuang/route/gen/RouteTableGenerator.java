@@ -56,18 +56,20 @@ public class RouteTableGenerator {
             CodeBlock.Builder ruleBuilder = CodeBlock.builder();
             int seq = order.incrementAndGet();
             ruleBuilder.addStatement("$T builder$L = new $T()", Types.CLZ_ROUTE_RULE_BUILDER, seq,
-                    Types.CLZ_ROUTE_RULE_BUILDER);
-            // 路由注解配置的都是native的路由
-            ruleBuilder.addStatement("builder$L.setMode($T.$N)", seq, Types.CLZ_ROUTE_RULE_MODE, elementUtils.getName(
-                    Types.ROUTE_RULE_MODE_NATIVE));
-            ruleBuilder.addStatement("builder$L.setScheme($S)", seq, target.getRuleInfo().getScheme());
-            ruleBuilder.addStatement("builder$L.setAuthority($S)", seq, target.getRuleInfo().getDomain());
-            ruleBuilder.addStatement("builder$L.setPath($S)", seq, target.getRuleInfo().getPath());
-            ruleBuilder.addStatement("builder$L.setKey($S)", seq, target.getRuleInfo().getKey());
-            ruleBuilder.addStatement("builder$L.setQualified($S)", seq, target.getRuleInfo().getQualified());
-            ruleBuilder.addStatement("builder$L.setNeedLogin($L)", seq, target.getRuleInfo().isNeedLogin());
-            ruleBuilder.addStatement("rules.add(builder$L.build())", seq);
-            ruleBuilder.add(CodeBlock.builder().add("/* rule$L added into rules. */\n", seq).build());
+                    Types.CLZ_ROUTE_RULE_BUILDER)
+                    // 路由注解配置的都是native的路由
+                    .addStatement("builder$L.setMode($T.$N)", seq, Types.CLZ_ROUTE_RULE_MODE, elementUtils.getName(
+                            Types.ROUTE_RULE_MODE_NATIVE))
+                    .addStatement("builder$L.setScheme($S)", seq, target.getRuleInfo().getScheme())
+                    .addStatement("builder$L.setDomain($S)", seq, target.getRuleInfo().getDomain())
+                    .add(CodeBlock.builder().add("// Fallback setAuthority with domain, will be reset. \n").build())
+                    .addStatement("builder$L.setAuthority($S)", seq, target.getRuleInfo().getDomain())
+                    .addStatement("builder$L.setPath($S)", seq, target.getRuleInfo().getPath())
+                    .addStatement("builder$L.setKey($S)", seq, target.getRuleInfo().getKey())
+                    .addStatement("builder$L.setQualified($S)", seq, target.getRuleInfo().getQualified())
+                    .addStatement("builder$L.setNeedLogin($L)", seq, target.getRuleInfo().isNeedLogin())
+                    .addStatement("rules.add(builder$L.build())", seq)
+                    .add(CodeBlock.builder().add("/* rule$L added into rules. */\n", seq).build());
             methodCollectRulesBuilder.addCode(ruleBuilder.build());
         }
         methodCollectRulesBuilder.addStatement("return rules");
