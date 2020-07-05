@@ -20,6 +20,6 @@ public class UrlMatcher extends AbsUrlMatcher {
 
     @Override
     public RouteRule match(String url) {
-        return null;
+        return match(url, null);
     }
 }

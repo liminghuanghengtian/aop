@@ -23,11 +23,11 @@ public class MainModule extends AbsRouteModule {
         // https://github.com/liminghuanghengtian/aop
         RouteRule.Builder builder1 = new RouteRule.Builder();
         builder1.setMode(RouteRule.Mode.H5);
-        builder1.setScheme("https");
         builder1.setDomain("app");
+        builder1.setKey("aop_page");
+        builder1.setScheme("https");
         builder1.setAuthority("github.com");
         builder1.setPath("/liminghuanghengtian/aop");
-        builder1.setKey("aop_page");
         builder1.setQualified("com.liminghuang.demo.GithubAopProjectActivity");
         builder1.setNeedLogin(false);
         rules.add(builder1.build());

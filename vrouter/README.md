@@ -10,8 +10,8 @@
 8. Hook
    OnActivityResult，支持RxJava响应式调用，不再需要进行requestCode判断。对确切的startActivityForResult请求如何处理
 9. 提供方式：通过服务提供
-10. 无对应页面时，可能时三方外部的链接，通过Action：View抛给系统处理
-11. 一次路由跳转请求封装成一个request
+10. 无对应页面时，可能是三方外部的链接，通过Action：View抛给系统处理
+11. 一次路由跳转请求封装成一个request，包括拦截器都可以参考okhttp3
 
 ## 设计
 ![router设计](https://upload-images.jianshu.io/upload_images/53953-ce3ffb119e0d6534.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp)
