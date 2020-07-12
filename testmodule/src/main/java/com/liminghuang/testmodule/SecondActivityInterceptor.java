@@ -24,11 +24,13 @@ import com.liminghuang.vrouter.Response;
  */
 public class SecondActivityInterceptor implements Interceptor {
     private static final String TAG = "SecondActivityInterceptor";
+    private boolean isSucceed = false;
+    private Response actualResponse;
 
     @Override
-    public Response intercept(Chain call) throws Exception {
+    public Response intercept(Chain chain) throws Exception {
         Log.d(TAG, "intercept");
-        Request request = call.request();
+        Request request = chain.request();
         final Request.AddressCompat addressCompat = request.getAddressCompat();
         Context context = request.getAddressCompat().getContext();
 
@@ -46,7 +48,7 @@ public class SecondActivityInterceptor implements Interceptor {
             builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // call.cancel();
+                    // chain.cancel();
                 }
             });
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -54,7 +56,7 @@ public class SecondActivityInterceptor implements Interceptor {
                 public void onClick(DialogInterface dialog, int which) {
                     addressCompat.getAddress().getIntent().putExtra("key1", "value3");
                     try {
-                        call.proceed(request);
+                        actualResponse = chain.proceed(request);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -63,7 +65,7 @@ public class SecondActivityInterceptor implements Interceptor {
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    // call.cancel();
+                    // chain.cancel();
                 }
             });
             ((Activity) request.getAddressCompat().getContext()).runOnUiThread(new Runnable() {
@@ -74,10 +76,11 @@ public class SecondActivityInterceptor implements Interceptor {
             });
         }
 
+        // TODO: 2020/7/12 这个response应该设计成一个包装接口，可以获取结果actualResponse
         return new Response() {
             @Override
             public boolean isSuccessfully() {
-                return false;
+                return isSucceed;
             }
 
             @NonNull
