@@ -8,8 +8,8 @@ package com.liminghuang.route;
  * @since 1.0.0
  */
 public class Constants {
-    public static final String NATIVE_SCHEME = "vinda_native";
-    public static final String H5_SCHEME = "vinda_h5";
+    public static final String NATIVE_SCHEME = "vindanative";
+    public static final String H5_SCHEME = "vindah5";
     public static final String MODE_NATIVE = NATIVE_SCHEME;
     public static final String MODE_H5 = H5_SCHEME;
 }
