@@ -42,8 +42,11 @@ public class FirstActivity extends AppCompatActivity {
             VRouter.Builder builder1 = new VRouter.Builder();
             builder1.addInterceptor(new SecondActivityInterceptor());
             builder1.loginInterceptor(new Interceptor() {
+                private static final String TAG = "nimingInterceptor";
+
                 @Override
                 public Response intercept(Chain chain) throws Exception {
+                    Log.d(TAG, "intercept");
                     Request originalReq = chain.request();
                     if (originalReq.getAddressCompat().getAddress().component1().needLogin()) {
                         Log.e(TAG, String.format("%s need login, turn to login page.",
