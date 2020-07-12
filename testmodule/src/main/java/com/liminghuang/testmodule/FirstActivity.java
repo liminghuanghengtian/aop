@@ -51,7 +51,7 @@ public class FirstActivity extends AppCompatActivity {
                     if (originalReq.getAddressCompat().getAddress().component1().needLogin()) {
                         Log.e(TAG, String.format("%s need login, turn to login page.",
                                 originalReq.getAddressCompat().getAddress().getAssembleUrl()));
-                        // TODO: 2020/7/12 跳转登录页
+                        // TODO: 2020/7/12 跳转登录页，需要把当前的request带走，request需要设计成为一个链条结构，挂载子节点。或者登录成功返回后执行
                         return null;
                     } else {
                         try {
