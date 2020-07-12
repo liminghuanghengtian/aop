@@ -1,8 +1,10 @@
 package com.liminghuang.testmodule;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,6 +27,7 @@ public class SecondActivityInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain call) throws Exception {
+        Log.d(TAG, "intercept");
         Request request = call.request();
         final Request.AddressCompat addressCompat = request.getAddressCompat();
         Context context = request.getAddressCompat().getContext();
@@ -36,33 +39,41 @@ public class SecondActivityInterceptor implements Interceptor {
                 request.getAddressCompat().getAddress().getIntent().getDataString();
         stringBuffer.append("URL: " + url + "\n");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog_Alert);
-        builder.setTitle("Notice");
-        builder.setMessage(stringBuffer);
-        builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // call.cancel();
-            }
-        });
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                addressCompat.getAddress().getIntent().putExtra("key1", "value3");
-                try {
-                    call.proceed(request);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (request.getAddressCompat().getContext() instanceof Activity) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog_Alert);
+            builder.setTitle("Notice");
+            builder.setMessage(stringBuffer);
+            builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // call.cancel();
                 }
-            }
-        });
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                // call.cancel();
-            }
-        });
-        builder.show();
+            });
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    addressCompat.getAddress().getIntent().putExtra("key1", "value3");
+                    try {
+                        call.proceed(request);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    // call.cancel();
+                }
+            });
+            ((Activity) request.getAddressCompat().getContext()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    builder.show();
+                }
+            });
+        }
+
         return new Response() {
             @Override
             public boolean isSuccessfully() {
