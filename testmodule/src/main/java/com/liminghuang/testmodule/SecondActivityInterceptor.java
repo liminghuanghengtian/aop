@@ -24,7 +24,7 @@ public class SecondActivityInterceptor implements Interceptor {
     private static final String TAG = "SecondActivityInterceptor";
 
     @Override
-    public Response intercept(Chain call) {
+    public Response intercept(Chain call) throws Exception {
         Request request = call.request();
         final Request.AddressCompat addressCompat = request.getAddressCompat();
         Context context = request.getAddressCompat().getContext();
@@ -64,6 +64,11 @@ public class SecondActivityInterceptor implements Interceptor {
         });
         builder.show();
         return new Response() {
+            @Override
+            public boolean isSuccessfully() {
+                return false;
+            }
+
             @NonNull
             @Override
             public String toString() {

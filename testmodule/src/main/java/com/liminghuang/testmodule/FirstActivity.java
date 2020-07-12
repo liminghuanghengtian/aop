@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.liminghuang.route.annotation.RouteTarget;
 import com.liminghuang.vrouter.Call;
 import com.liminghuang.vrouter.Callback;
+import com.liminghuang.vrouter.Interceptor;
 import com.liminghuang.vrouter.Request;
 import com.liminghuang.vrouter.Response;
 import com.liminghuang.vrouter.VRouter;
@@ -40,7 +41,34 @@ public class FirstActivity extends AppCompatActivity {
         if (request != null) {
             VRouter.Builder builder1 = new VRouter.Builder();
             builder1.addInterceptor(new SecondActivityInterceptor());
-            builder1.
+            builder1.loginInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws Exception {
+                    Request originalReq = chain.request();
+                    if (originalReq.getAddressCompat().getAddress().component1().needLogin()) {
+                        Log.e(TAG, String.format("%s need login, turn to login page.",
+                                originalReq.getAddressCompat().getAddress().getAssembleUrl()));
+                        // TODO: 2020/7/12 跳转登录页
+                        return null;
+                    } else {
+                        try {
+                            return chain.proceed(originalReq);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+                }
+            });
+            builder1.addLogInterceptor(new Interceptor() {
+                private static final String TAG = "LogInterceptor";
+
+                @Override
+                public Response intercept(Chain chain) throws Exception {
+                    Log.d(TAG, "intercept");
+                    return chain.proceed(chain.request());
+                }
+            });
             VRouter vRouter = builder1.build();
             vRouter.newCall(request).dispatch(new Callback() {
                 @Override

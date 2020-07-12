@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.liminghuang.testmodule" />
+    package="com.liminghuang.testmodule">
+
+    <application>
+        <activity android:name=".FirstActivity" />
+        <activity android:name=".SecondActivity" />
+    </application>
+</manifest>

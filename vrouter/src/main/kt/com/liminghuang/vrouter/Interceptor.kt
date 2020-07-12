@@ -11,7 +11,7 @@ import java.io.IOException
  * @since: 1.0.0
  */
 interface Interceptor {
-    @Throws(IOException::class)
+    @Throws(Exception::class)
     fun intercept(chain: Chain): Response?
 
     companion object {
