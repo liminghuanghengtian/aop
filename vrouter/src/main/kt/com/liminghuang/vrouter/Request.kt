@@ -3,6 +3,7 @@ package com.liminghuang.vrouter
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 
 /**
  * ProjectName: AOP
@@ -17,6 +18,11 @@ class Request(val addressCompat: AddressCompat) {
     class AddressCompat internal constructor(val context: Context, val address: Address, val reqCode: Int, val options: Bundle?)
 
     class Builder(private val context: Context) {
+
+        companion object {
+            private const val TAG: String = "Request.Builder"
+        }
+
         private var tag: String? = null
         private var params: Bundle? = null
         private var flags = 0
@@ -57,11 +63,13 @@ class Request(val addressCompat: AddressCompat) {
             var address: Address? = null
             tag?.let {
                 if (it.isNotEmpty()) {
+                    Log.d(TAG, "tag: $it");
                     address = VRouter.buildAddress(context, tag!!, params!!)
                 }
             }
             val url = uri?.toString()
             url?.let {
+                Log.d(TAG, "uri: $it");
                 address = VRouter.buildAddress(context, it)
             }
             if (address != null) {
@@ -69,6 +77,8 @@ class Request(val addressCompat: AddressCompat) {
                 address!!.intent?.putExtras(params!!)
                 // TODO: 2020/7/11
 //                 address!!.intent.setData(uri);
+            } else {
+                Log.d(TAG, "address not found.")
             }
 
             return address?.let { Request(AddressCompat(context, address!!, reqCode, options)) }

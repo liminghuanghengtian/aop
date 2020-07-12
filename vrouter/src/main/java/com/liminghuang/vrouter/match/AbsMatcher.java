@@ -24,7 +24,7 @@ public abstract class AbsMatcher implements IMatcher {
     @Override
     public RouteRule match(String url, String tag) {
         if (matcherImpl != null) {
-            matcherImpl.match(url, tag);
+            return matcherImpl.match(url, tag);
         }
         return null;
     }

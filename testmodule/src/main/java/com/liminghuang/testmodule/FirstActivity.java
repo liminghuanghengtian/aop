@@ -81,6 +81,8 @@ public class FirstActivity extends AppCompatActivity {
                     Log.d(TAG, String.format("onResponse, %b", (response != null && response.isSuccessfully())));
                 }
             });
+        } else {
+            Log.d(TAG, "request is null");
         }
     }
 }
