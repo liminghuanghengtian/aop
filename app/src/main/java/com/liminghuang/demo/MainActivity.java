@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.liminghuang.cache.annotation.MemCache;
 import com.liminghuang.route.annotation.RouteTarget;
 import com.liminghuang.route.inject.annotation.Query;
+import com.liminghuang.testmodule.FirstActivity;
 import com.liminghuang.viewfinder.ViewFinder;
 import com.liminghuang.viewfinder.annotation.BindView;
 import com.liminghuang.viewfinder.annotation.OnClick;
@@ -68,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public void onContentViewClick(View view) {
         Toast.makeText(this, "id: " + view.getId() + " is clicked，go to SecondActivity",
                 Toast.LENGTH_LONG).show();
-        calculate(1,3);
-        startActivity(new Intent(this, SecondActivity.class));
+        calculate(1, 3);
+        startActivity(new Intent(this, FirstActivity.class));
     }
 
     @OnClick(value = R.id.tv_title)
