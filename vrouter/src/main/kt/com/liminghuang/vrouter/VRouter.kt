@@ -47,7 +47,7 @@ open class VRouter internal constructor(builder: Builder) : Call.Factory {
      * These interceptors must call [Interceptor.Chain.proceed] exactly once: it is an error for
      * a network interceptor to short-circuit or repeat a network request.
      */
-    @get:JvmName("networkInterceptors")
+    @get:JvmName("logInterceptors")
     val logInterceptors: List<Interceptor> = builder.logInterceptors.toImmutableList()
 
     constructor() : this(Builder())
@@ -70,7 +70,7 @@ open class VRouter internal constructor(builder: Builder) : Call.Factory {
             level = DeprecationLevel.ERROR)
     fun interceptors(): List<Interceptor> = interceptors
 
-    @JvmName("-deprecated_networkInterceptors")
+    @JvmName("-deprecated_logInterceptors")
     @Deprecated(
             message = "moved to val",
             replaceWith = ReplaceWith(expression = "logInterceptors"),
