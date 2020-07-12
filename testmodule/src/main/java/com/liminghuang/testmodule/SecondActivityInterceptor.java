@@ -17,8 +17,8 @@ import com.liminghuang.vrouter.Response;
  * CreateDate: 2020/7/11 2:39 PM
  *
  * @author: <a href="1569642270@qq.com>colin</a>
- * @version: 3.19.0
- * @since: 3.19.0
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 public class SecondActivityInterceptor implements Interceptor {
     private static final String TAG = "SecondActivityInterceptor";

@@ -7,8 +7,8 @@ import java.io.IOException
  * Description: 路由拦截器.
  * CreateDate: 2020/7/11 4:35 PM
  * @author: <a href="1569642270@qq.com>colin</a>
- * @version: 3.19.0
- * @since: 3.19.0
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 interface Interceptor {
     @Throws(IOException::class)

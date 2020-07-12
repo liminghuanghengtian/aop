@@ -9,9 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger
  * ProjectName: AOP
  * Description: 路由[Call]分发器.
  * CreateDate: 2020/7/11 8:17 PM
- * @author: <a href="mailto:liming.huang@tuya.com">colin</a>
- * @version: 3.19.0
- * @since: 3.19.0
+ * @author: <a href="mailto:1569642270@qq.com">colin</a>
+ * @version: 1.0.0
+ * @since: 1.0.0
  */
 class Dispatcher internal constructor() {
     init {
