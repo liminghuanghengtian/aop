@@ -24,7 +24,7 @@ import javax.lang.model.util.Elements;
  * Description:
  * CreateDate: 2020/6/10 3:49 PM
  *
- * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @author: <a href="mailto:1569642270@qq.com">colin</a>
  * @version: 1.0.0
  * @since: 1.0.0
  */

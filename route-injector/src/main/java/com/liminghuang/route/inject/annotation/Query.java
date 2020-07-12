@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * Description: 路由参数注解.
  * CreateDate: 2020/6/10 2:22 PM
  *
- * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @author: <a href="mailto:1569642270@qq.com">colin</a>
  * @version: 1.0.0
  * @since: 1.0.0
  */

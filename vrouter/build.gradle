@@ -21,6 +21,9 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kt'
+    }
 }
 
 dependencies {
@@ -31,4 +34,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(':route-lib')
+    compileOnly("com.squareup.okhttp3:okhttp:4.7.2")
 }

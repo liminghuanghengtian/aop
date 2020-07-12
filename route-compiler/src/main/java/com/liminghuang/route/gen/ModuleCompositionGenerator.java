@@ -20,7 +20,7 @@ import javax.tools.Diagnostic;
  * Description: app主模块进行下述合成.
  * CreateDate: 2020/6/10 8:51 PM
  *
- * @author: <a href="mailto:1569642270@qq.com"">colin</a>
+ * @author: <a href="mailto:1569642270@qq.com">colin</a>
  * @version: 1.0.0
  * @since: 1.0.0
  */

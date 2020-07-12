@@ -39,6 +39,7 @@ dependencies {
     implementation project(':route-lib')
     // annotationProcessor专用依赖方式，此依赖下的库不会打包到apk中
     annotationProcessor project(':route-compiler')
+    implementation project(':vrouter')
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
