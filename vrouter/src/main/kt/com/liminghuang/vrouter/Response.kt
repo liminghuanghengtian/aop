@@ -10,4 +10,6 @@ package com.liminghuang.vrouter
  */
 interface Response {
     fun isSuccessfully(): Boolean
+
+    fun behind(): Response?;
 }

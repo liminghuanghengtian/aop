@@ -24,7 +24,6 @@ import com.liminghuang.vrouter.Response;
  */
 public class SecondActivityInterceptor implements Interceptor {
     private static final String TAG = "SecondActivityInterceptor";
-    private boolean isSucceed = false;
     private Response actualResponse;
 
     @Override
@@ -79,8 +78,13 @@ public class SecondActivityInterceptor implements Interceptor {
         // TODO: 2020/7/12 这个response应该设计成一个包装接口，可以获取结果actualResponse
         return new Response() {
             @Override
+            public Response behind() {
+                return actualResponse;
+            }
+
+            @Override
             public boolean isSuccessfully() {
-                return isSucceed;
+                return behind() != null && behind().isSuccessfully();
             }
 
             @NonNull

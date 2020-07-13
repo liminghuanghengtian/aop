@@ -13,7 +13,7 @@ import android.util.Log
  * @version: 1.0.0
  * @since: 1.0.0
  */
-class Request(val addressCompat: AddressCompat) {
+class Request(val addressCompat: AddressCompat, val next: Request?) {
 
     class AddressCompat internal constructor(val context: Context, val address: Address, val reqCode: Int, val options: Bundle?)
 
@@ -29,35 +29,33 @@ class Request(val addressCompat: AddressCompat) {
         private var uri: Uri? = null
         private var reqCode = 0
         private var options: Bundle? = null
-        fun setTag(tag: String?): Builder {
+        private var next: Request? = null
+
+        fun setTag(tag: String?) = apply {
             this.tag = tag
-            return this
         }
 
-        fun setParams(params: Bundle?): Builder {
+        fun setParams(params: Bundle?) = apply {
             this.params = params
-            return this
         }
 
-        fun setReqCode(reqCode: Int): Builder {
+        fun setReqCode(reqCode: Int) = apply {
             this.reqCode = reqCode
-            return this
         }
 
-        fun setFlags(flags: Int): Builder {
+        fun setFlags(flags: Int) = apply {
             this.flags = flags
-            return this
         }
 
-        fun setOptions(options: Bundle?): Builder {
+        fun setOptions(options: Bundle?) = apply {
             this.options = options
-            return this
         }
 
-        fun setUri(uri: Uri?): Builder {
+        fun setUri(uri: Uri?) = apply {
             this.uri = uri
-            return this
         }
+
+        fun setNext(next: Request?) = apply { this.next = next }
 
         fun build(): Request? {
             var address: Address? = null
@@ -81,7 +79,7 @@ class Request(val addressCompat: AddressCompat) {
                 Log.d(TAG, "address not found.")
             }
 
-            return address?.let { Request(AddressCompat(context, address!!, reqCode, options)) }
+            return address?.let { Request(AddressCompat(context, address!!, reqCode, options), next) }
         }
     }
 }

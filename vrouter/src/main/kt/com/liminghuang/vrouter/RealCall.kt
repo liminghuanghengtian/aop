@@ -1,5 +1,6 @@
 package com.liminghuang.vrouter
 
+import android.util.Log
 import okhttp3.internal.platform.Platform
 import java.io.IOException
 import java.util.concurrent.ExecutorService
@@ -19,11 +20,17 @@ class RealCall(val vrouter: VRouter, val originalRequest: Request) : Call {
     // Guarded by this.
     private var executed = false
 
+    companion object {
+        private const val TAG: String = "RealCall"
+    }
+
     override fun dispatch(responseCallback: Callback) {
+        // 防止并发路由两次
         synchronized(this) {
             check(!executed) { "Already Executed" }
             executed = true
         }
+
         vrouter.dispatcher.enqueue(AsyncCall(responseCallback, vrouter, originalRequest))
     }
 
@@ -47,23 +54,25 @@ class RealCall(val vrouter: VRouter, val originalRequest: Request) : Call {
                 request = originalRequest
         )
 
-        var calledNoMoreExchanges = false
         try {
             return chain.proceed(originalRequest)
         } catch (e: Exception) {
-            calledNoMoreExchanges = true
             throw e
         } finally {
-            if (!calledNoMoreExchanges) {
-            }
+            Log.d(TAG, "getResponseWithInterceptorChain execute finish.")
         }
     }
 
     internal fun assembleUrl(): String = originalRequest.addressCompat.address.assembleUrl
 
+    /**
+     * inner内部类才可以访问声明它的作用域的属性或方法。不加inner就是Nested class，则不行
+     */
     internal inner class AsyncCall(private val responseCallback: Callback?,
                                    private val vrouter: VRouter,
                                    private val originalReq: Request) : Runnable {
+
+        // 保证可见性
         @Volatile
         var callsPerHost = AtomicInteger(0)
             private set
@@ -104,7 +113,7 @@ class RealCall(val vrouter: VRouter, val originalRequest: Request) : Call {
         }
 
         override fun run() {
-            threadName("OkHttp ${assembleUrl()}") {
+            threadName("VRouter ${assembleUrl()}") {
                 var signalledCallback = false
                 try {
                     val response = getResponseWithInterceptorChain()
