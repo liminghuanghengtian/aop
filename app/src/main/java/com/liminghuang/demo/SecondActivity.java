@@ -15,11 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
+import com.liminghuang.javassist.lib.annotaion.Bus;
 import com.liminghuang.route.annotation.RouteTarget;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,6 +24,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 /**
  * 所有以on开头的方法都会被注入打印方法的代码.
@@ -185,5 +186,10 @@ public class SecondActivity extends AppCompatActivity {
                 activity.checkPermissions();
             }
         }
+    }
+
+    @Bus(value = EventTag.E1001)
+    public void onEvent(){
+
     }
 }
