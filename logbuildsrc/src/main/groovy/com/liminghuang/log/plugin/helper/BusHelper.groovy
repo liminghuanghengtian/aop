@@ -6,13 +6,13 @@ import javassist.CtNewMethod
 import javassist.bytecode.MethodInfo
 import javassist.bytecode.annotation.Annotation
 import javassist.bytecode.annotation.IntegerMemberValue
-import proguard.classfile.attribute.annotation.AnnotationsAttribute
+import javassist.bytecode.AnnotationsAttribute
 import com.liminghuang.log.plugin.*
 
 public class BusHelper {
-    final static String OkBusAnnotation = "com.app.annotation.javassist.Bus"
-    final static String OkBusRegisterAnnotation = "com.app.annotation.javassist.BusRegister"
-    final static String OkBusUnRegisterAnnotation = "com.app.annotation.javassist.BusUnRegister"
+    final static String OkBusAnnotation = "com.liminghuang.javassit.lib.annotation.Bus"
+    final static String OkBusRegisterAnnotation = "com.liminghuang.javassit.lib.annotation.BusRegister"
+    final static String OkBusUnRegisterAnnotation = "com.liminghuang.javassit.lib.annotation.BusUnRegister"
     static def ON_CREATE = ['onCreate', "onActivityCreated"] as String[]
     static def ON_DESTROY = 'onDestroy'
 
@@ -35,22 +35,33 @@ public class BusHelper {
      * @param path
      */
     static void intBus(BusInfo mBusInfo, String path) {
-        if (mBusInfo.clazz.isFrozen()) mBusInfo.clazz.defrost()//解冻
-        if (mBusInfo.BusRegisterMethod != null) {//有被BusRegister注解的方法
+        if (mBusInfo.clazz.isFrozen()) {
+            // 解冻
+            mBusInfo.clazz.defrost()
+        }
+
+        // 有被BusRegister注解的方法
+        if (mBusInfo.BusRegisterMethod != null) {
             mBusInfo.project.logger.quiet "BusRegisterMethod not null" +
                     mBusInfo.BusRegisterMethod.insertAfter(getRegisterEventMethodStr(mBusInfo));
-        } else if (mBusInfo.getOnCreateMethod() == null) {//没有OnCreateMethod，创建并加上新代码
-            mBusInfo.project.logger.quiet "getOnCreateMethod  null "  + mBusInfo.isActivity
+        } else if (mBusInfo.getOnCreateMethod() == null) {
+            // 没有OnCreateMethod，创建并加上新代码
+            mBusInfo.project.logger.quiet "getOnCreateMethod  null " + mBusInfo.isActivity
             String pre_create_str = mBusInfo.isActivity ? Activity_OnCreate : Fragment_OnCreate;
             String m = pre_create_str + getRegisterEventMethodStr(mBusInfo) + "}"
             mBusInfo.project.logger.quiet m
+            // 创建成员方法
             CtMethod mInitEventMethod = CtNewMethod.make(m, mBusInfo.clazz);
+            // 在 CtClass 中追加到点与 addMethod ()。
             mBusInfo.clazz.addMethod(mInitEventMethod)
-        } else {//有OnCreateMethod，直接插入新代码
+        } else {
+            // 有OnCreateMethod，直接插入新代码
             mBusInfo.project.logger.quiet "OnCreateMethod not null"
             mBusInfo.OnCreateMethod.insertAfter(getRegisterEventMethodStr(mBusInfo));
         }
-        if (mBusInfo.BusUnRegisterMethod != null) {//有被BusUnRegister注解的方法
+
+        // 有被BusUnRegister注解的方法
+        if (mBusInfo.BusUnRegisterMethod != null) {
             mBusInfo.project.logger.quiet "BusUnRegisterMethod not null"
             mBusInfo.BusUnRegisterMethod.insertAfter(getUnRegisterEventMethodStr(mBusInfo));
         } else if (mBusInfo.OnDestroyMethod == null) {
@@ -64,6 +75,7 @@ public class BusHelper {
             mBusInfo.OnDestroyMethod.insertAfter(getUnRegisterEventMethodStr(mBusInfo));
         }
 
+        // CtClass 对象更改后将反映在原始类文件中，writeFile () 将 CtClass 对象转换为类文件, 并将其写入本地磁盘
         mBusInfo.clazz.writeFile(path)
     }
 
@@ -74,15 +86,18 @@ public class BusHelper {
      */
     static String getRegisterEventMethodStr(BusInfo mBusInfo) {
         String CreateStr = "";
-        mBusInfo.clazz.addInterface(mBusInfo.clazz.classPool.get("com.base.event.Event"));//为当前的类添加时间处理的接口
+        //为当前的类添加时间处理的接口
+        mBusInfo.clazz.addInterface(mBusInfo.clazz.classPool.get("com.liminghuang.demo.event.Event"));
+
+        // 事件消耗方
         for (int i = 0; i < mBusInfo.getMethods().size(); i++) {
             MethodInfo methodInfo = mBusInfo.getMethods().get(i).getMethodInfo();
             Annotation mAnnotation = mBusInfo.getAnnotations().get(i)
             AnnotationsAttribute attribute = methodInfo.getAttribute(AnnotationsAttribute.visibleTag);
             //获取注解属性
-            javassist.bytecode.annotation.Annotation annotation = attribute.getAnnotation(mAnnotation.annotationType().canonicalName);
-            //获取注解
-            int id = ((IntegerMemberValue) annotation.getMemberValue("value")).getValue();//获取注解的值
+            Annotation annotation = attribute.getAnnotation(mAnnotation.annotationType().canonicalName);
+            //获取注解值
+            int id = ((IntegerMemberValue) annotation.getMemberValue("value")).getValue();
             int thread = -1;
             if (annotation.getMemberValue("thread") != null)
                 thread = ((IntegerMemberValue) annotation.getMemberValue("thread")).getValue();
@@ -92,6 +107,7 @@ public class BusHelper {
         initEventDispatch(mBusInfo)
         return CreateStr;
     }
+
     /**
      * 生成event事件分发的逻辑代码
      * @param mBusInfo
@@ -103,6 +119,7 @@ public class BusHelper {
             CtMethod method = mBusInfo.getMethods().get(i)
             CtClass[] mParameterTypes = method.getParameterTypes();
             assert mParameterTypes.length <= 1
+
             boolean one = mParameterTypes.length == 1
             boolean isBaseType = false;
             String packageName = "";
@@ -131,13 +148,15 @@ public class BusHelper {
         String m = SwitchStr + "}\n}"
         mBusInfo.project.logger.quiet m
         CtMethod mDispatchEventMethod = CtMethod.make(m, mBusInfo.clazz);
+        // 添加分发方法
         mBusInfo.clazz.addMethod(mDispatchEventMethod)
     }
+
     /**
      * 生成取消事件注册的代码
      * @param mBusInfo
      */
-    static String getUnRegisterEventMethodStr(mBusInfo) {
+    static String getUnRegisterEventMethodStr(BusInfo mBusInfo) {
         String dis_Str = "";
         mBusInfo.eventIds.each { id -> dis_Str += "OkBus.getInstance().unRegister(" + id + ");\n" }
         return dis_Str;

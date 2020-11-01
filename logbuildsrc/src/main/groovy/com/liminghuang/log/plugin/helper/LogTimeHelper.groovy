@@ -9,7 +9,7 @@ public class LogTimeHelper {
 
     final static String prefix = "\nlong startTime = System.currentTimeMillis();\n";
     final static String postfix = "\nlong endTime = System.currentTimeMillis();\n";
-    final static String LogTimeAnnotation = "com.app.annotation.javassist.LogTime";
+    final static String LogTimeAnnotation = "com.liminghuang.javassist.lib.annotaion.LogTime";
 
     //  时间log先注释掉               if (mAnnotation.annotationType().canonicalName.equals(com.liminghuang.log.plugin.helper1.LogTimeHelper.LogTimeAnnotation))
     //                                    com.liminghuang.log.plugin.helper1.LogTimeHelper.initLogTime(project, methodName, className, ctmethod, c, path);
@@ -23,8 +23,7 @@ public class LogTimeHelper {
         //新定义一个方法叫做比如sayHello$impl
         ctmethod.setName(newMethodName);//原来的方法改个名字
         project.logger.error "替换老方法!" + className + "." + methodName + "改名为" + newMethodName
-        CtMethod newMethod = CtNewMethod.copy(ctmethod,
-                methodName, c, null);//创建新的方法，复制原来的方法 ，名字为原来的名字
+        CtMethod newMethod = CtNewMethod.copy(ctmethod, methodName, c, null);//创建新的方法，复制原来的方法 ，名字为原来的名字
         //构建新的方法体
         StringBuilder bodyStr = new StringBuilder();
         bodyStr.append("{");

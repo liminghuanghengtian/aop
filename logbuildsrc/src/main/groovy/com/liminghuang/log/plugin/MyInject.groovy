@@ -45,6 +45,7 @@ public class MyInject {
                         // CtClass（编译时类）是类文件的抽象表示形式，是处理类文件的句柄
                         CtClass c = pool.getCtClass(className)
                         // CtClass对象由 writeFile ()、toClass () 或 toBytecode () 转换为类文件, Javassist 将冻结该 CtClass 对象。
+                        // toClass() 请求当前线程的上下文类加载程序加载由 CtClass 表示的类文件。它返回一个表示已加载类的 java.lang.Class 对象。
                         if (c.isFrozen()) {
                             // 冻结类解冻
                             c.defrost()
@@ -101,7 +102,9 @@ public class MyInject {
 
                             }
                         }
-                        c.detach() //用完一定记得要卸载，否则pool里的永远是旧的代码
+
+                        // 用完一定记得要卸载，否则pool里的永远是旧的代码
+                        c.detach()
                     }
                 }
             }
