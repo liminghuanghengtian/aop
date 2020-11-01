@@ -114,6 +114,9 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.8.+'
     implementation project(':testmodule')
     implementation project(':vrouter')
+
+    // javassit-log插件基础库
+    implementation project(':loglib')
 }
 //  解决build警告：编码GBK的不可映射字符
 tasks.withType(JavaCompile) {
