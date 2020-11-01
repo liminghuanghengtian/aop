@@ -28,8 +28,9 @@ public class Utils {
     }
 
     static String getClassName(int index, String filePath) {
-        int end = filePath.length() - 6
         // .class = 6
+        int end = filePath.length() - 6
+        // 文件路径分隔符合替换成包名分隔点符号
         return filePath.substring(index, end).replace('\\', '.').replace('/', '.')
     }
 }

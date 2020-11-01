@@ -51,8 +51,11 @@ public class LogTransform extends Transform {
      */
     @Override
     public Set<? super Scope> getScopes() {
-        return Sets.immutableEnumSet(Scope.PROJECT, Scope.PROJECT_LOCAL_DEPS, Scope.SUB_PROJECTS,
-                Scope.SUB_PROJECTS_LOCAL_DEPS, Scope.EXTERNAL_LIBRARIES);
+        return Sets.immutableEnumSet(Scope.PROJECT,
+                Scope.PROJECT_LOCAL_DEPS,
+                Scope.SUB_PROJECTS,
+                Scope.SUB_PROJECTS_LOCAL_DEPS,
+                Scope.EXTERNAL_LIBRARIES);
     }
 
     @Override
