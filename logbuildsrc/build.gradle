@@ -2,21 +2,21 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
 publishing {
+    repositories {
+        maven {
+            name = 'hlmLocal'
+            // 工程的build目录下的Repository目录下: "file://${buildDir}/Repository"
+            url uri("file://${rootDir}/Repository")
+        }
+    }
+
     publications {
         mavenJava(MavenPublication) {
             groupId 'com.liminghuang.plugin'
             artifactId 'logplugin'
-            version '1.0.0'
+            version '1.0.1'
 
             from components.java
-        }
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            url uri('../../Repository')
         }
     }
 }
@@ -25,5 +25,5 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'com.android.tools.build:gradle:3.0.1'
-    compile 'org.javassist:javassist:3.20.0-GA'
+    implementation 'org.javassist:javassist:3.20.0-GA'
 }
