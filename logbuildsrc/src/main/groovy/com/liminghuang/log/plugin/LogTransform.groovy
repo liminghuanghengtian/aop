@@ -10,7 +10,6 @@ import org.gradle.api.Project
 import javassist.ClassPool
 
 import java.util.function.Consumer
-
 /**
  * Transform
  */
@@ -52,9 +51,7 @@ public class LogTransform extends Transform {
     @Override
     public Set<? super Scope> getScopes() {
         return Sets.immutableEnumSet(Scope.PROJECT,
-                Scope.PROJECT_LOCAL_DEPS,
                 Scope.SUB_PROJECTS,
-                Scope.SUB_PROJECTS_LOCAL_DEPS,
                 Scope.EXTERNAL_LIBRARIES);
     }
 
@@ -83,10 +80,11 @@ public class LogTransform extends Transform {
                     transformInput.getJarInputs().forEach(new Consumer<JarInput>() {
                         @Override
                         public void accept(JarInput jarInput) {
-                            project.logger.debug jarInput.name
+                            project.logger.info(jarInput.name)
 
                             MyInject.injectDir(jarInput.file.getAbsolutePath(), "com.liminghuang.demo", project)
                             String outputFileName = jarInput.name.replace(".jar", "") + '-' + jarInput.file.path.hashCode()
+                            // 定义输出路径-jars
                             def output = transformInvocation.getOutputProvider().getContentLocation(outputFileName, jarInput.contentTypes, jarInput.scopes, Format.JAR)
                             FileUtils.copyFile(jarInput.file, output)
                         }
@@ -99,11 +97,11 @@ public class LogTransform extends Transform {
                 transformInput.getDirectoryInputs().forEach(new Consumer<DirectoryInput>() {
                     @Override
                     public void accept(DirectoryInput directoryInput) {
-                        project.logger.debug directoryInput.name
+                        project.logger.info(directoryInput.name)
 
                         // 文件夹里面包含的是我们手写的类以及R.class、BuildConfig.class以及R$XXX.class等
                         MyInject.injectDir(directoryInput.file.absolutePath, "com.liminghuang.demo", project)
-                        // 获取output目录
+                        // 获取output目录-folders
                         def dest = transformInvocation.getOutputProvider().getContentLocation(directoryInput.name,
                                 directoryInput.contentTypes, directoryInput.scopes,
                                 Format.DIRECTORY)
