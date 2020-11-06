@@ -22,6 +22,7 @@ public class MyInject {
      * @param project
      */
     public static void injectDir(String path, String packageName, Project project) {
+        project.logger.info(" inject path -> " + path)
         // 添加类搜索路径
         pool.appendClassPath(path)
         // project.android.bootClasspath 加入android.jar，否则找不到android相关的所有类
