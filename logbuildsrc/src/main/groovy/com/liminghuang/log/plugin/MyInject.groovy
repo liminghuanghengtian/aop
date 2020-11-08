@@ -22,7 +22,7 @@ public class MyInject {
      * @param project
      */
     public static void injectDir(String path, String packageName, Project project) {
-        project.logger.info(" inject path -> " + path)
+        project.logger.error(" inject path -> " + path)
         // 添加类搜索路径
         pool.appendClassPath(path)
         // project.android.bootClasspath 加入android.jar，否则找不到android相关的所有类
@@ -106,9 +106,13 @@ public class MyInject {
 
                         // 用完一定记得要卸载，否则pool里的永远是旧的代码
                         c.detach()
+                    }else{
+                        project.logger.error(" filePath: ${filePath} is not my package")
                     }
                 }
             }
+        } else {
+            project.logger.error(" is file: ${path}")
         }
     }
 }

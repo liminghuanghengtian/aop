@@ -83,7 +83,7 @@ public class LogTransform extends Transform {
                         @Override
                         public void accept(JarInput jarInput) {
                             project.logger.error("jarInputs start transform...")
-                            project.logger.info(jarInput.name)
+                            project.logger.error(jarInput.name)
 
                             MyInject.injectDir(jarInput.file.getAbsolutePath(), "com.liminghuang.demo", project)
                             String outputFileName = jarInput.name.replace(".jar", "") + '-' + jarInput.file.path.hashCode()
@@ -101,7 +101,7 @@ public class LogTransform extends Transform {
                     @Override
                     public void accept(DirectoryInput directoryInput) {
                         project.logger.error("DirectoryInputs start transform...")
-                        project.logger.info(directoryInput.name)
+                        project.logger.error(directoryInput.name)
 
                         // 文件夹里面包含的是我们手写的类以及R.class、BuildConfig.class以及R$XXX.class等
                         MyInject.injectDir(directoryInput.file.absolutePath, "com.liminghuang.demo", project)
