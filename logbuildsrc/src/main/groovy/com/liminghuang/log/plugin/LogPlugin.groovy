@@ -1,6 +1,6 @@
 package com.liminghuang.log.plugin
 
-
+import com.android.build.gradle.AppExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,6 +14,8 @@ public class LogPlugin implements Plugin<Project> {
         log.error "Javassist start modify Class!"
         log.error "============================="
 
-        target.android.registerTransform(new LogTransform(target))
+        def android = project.extensions.getByType(AppExtension)
+        android.registerTransform(new LogTransform(target))
+//        target.android.registerTransform(new LogTransform(target))
     }
 }

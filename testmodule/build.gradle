@@ -40,7 +40,8 @@ dependencies {
     // annotationProcessor专用依赖方式，此依赖下的库不会打包到apk中
     annotationProcessor project(':route-compiler')
     implementation project(':vrouter')
-
+    // javassist-log插件基础库
+    implementation project(':loglib')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

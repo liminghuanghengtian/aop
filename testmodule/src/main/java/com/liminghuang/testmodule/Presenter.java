@@ -1,6 +1,7 @@
-package com.liminghuang.demo;
+package com.liminghuang.testmodule;
 
-import com.liminghuang.demo.utils.LogUtils;
+import android.util.Log;
+
 import com.liminghuang.javassist.lib.annotaion.Bus;
 import com.liminghuang.javassist.lib.annotaion.BusRegister;
 import com.liminghuang.javassist.lib.annotaion.BusUnRegister;
@@ -17,7 +18,7 @@ public class Presenter {
 
     @BusRegister
     public void onAttach() {
-        LogUtils.d(TAG, "onAttach");
+        Log.d(TAG, "onAttach");
     }
 
     @BusUnRegister

@@ -75,11 +75,14 @@ public class LogTransform extends Transform {
         transformInvocation.getInputs().forEach(new Consumer<TransformInput>() {
             @Override
             public void accept(TransformInput transformInput) {
+                project.logger.error("LogTask start transform...")
+
                 try {
                     // 遍历jar包
                     transformInput.getJarInputs().forEach(new Consumer<JarInput>() {
                         @Override
                         public void accept(JarInput jarInput) {
+                            project.logger.error("jarInputs start transform...")
                             project.logger.info(jarInput.name)
 
                             MyInject.injectDir(jarInput.file.getAbsolutePath(), "com.liminghuang.demo", project)
@@ -97,6 +100,7 @@ public class LogTransform extends Transform {
                 transformInput.getDirectoryInputs().forEach(new Consumer<DirectoryInput>() {
                     @Override
                     public void accept(DirectoryInput directoryInput) {
+                        project.logger.error("DirectoryInputs start transform...")
                         project.logger.info(directoryInput.name)
 
                         // 文件夹里面包含的是我们手写的类以及R.class、BuildConfig.class以及R$XXX.class等
