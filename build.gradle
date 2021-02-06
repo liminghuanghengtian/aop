@@ -71,3 +71,25 @@ ext {
     minSdkVersion = 16
     targetSdkVersion = 29
 }
+
+/**
+ * getAllProjects 使用示例
+ */
+project.getProjects()
+
+def getProjects() {
+    println "<================>"
+    println " Root Project Start "
+    println "<================>"
+    // 1、getAllprojects 方法返回一个包含根 project 与其子 project 的 Set 集合
+    // eachWithIndex 方法用于遍历集合、数组等可迭代的容器，
+    // 并同时返回下标，不同于 each 方法仅返回 project
+    this.getAllprojects().eachWithIndex { Project project, int index ->
+        // 2、下标为 0，表明当前遍历的是 rootProject
+        if (index == 0) {
+            println "Root Project is $project"
+        } else {
+            println "child Project is $project"
+        }
+    }
+}
