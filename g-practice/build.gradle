@@ -1,0 +1,86 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+println "build.gradle中的输出语句"
+
+defaultTasks "hello", "intro"
+project.tasks.create(name: "intro", dependsOn: "hello", action: {
+    println "My name is liminghuang."
+}, group: "liminghuang", overwrite: true, description: "介绍我自己的一个任务") {
+    doFirst {
+        println "${hello.holder}咳咳...$hello.name"
+    }
+    doLast {
+        println 'Ending pose.'
+    }
+}
+intro.doFirst {
+    println '大家安静下'
+}
+
+task hello {
+    ext.holder = "主持人"
+    println "${ext.holder}：ladies and gentleman, ready."
+    doLast {
+        4.times { print "$it " }
+        println '------------------'
+        println 'Hello everyone!'
+    }
+}
+
+this.project.afterEvaluate {
+    println 'afterEvaluate，配置完成了'
+    def buildTask = this.tasks.getByName("build")
+    buildTask.dependsOn([project.tasks.findByName(intro.name) as Task, project.tasks.findByName(outputwithinputTask.name) as Task])
+//    def finalTask = this.tasks.getByName("build")
+//    finalTask.dependsOn([buildTask as Task])
+    println '构建了任务topo关系'
+}
+
+def destFile = file("${project.getBuildDir()}/liminghuang.txt")
+if (!destFile.exists()) {
+    destFile.createNewFile()
+}
+task writeTask {
+    inputs.property('versionCode', this.versionCode)
+    inputs.property('versionName', this.versionName)
+    inputs.property('versionInfo', this.versionInfo)
+    // 1、指定输出文件为 destFile
+    outputs.file destFile
+    doLast {
+        //将输入的内容写入到输出文件中去
+        def data = inputs.getProperties()
+        File file = outputs.getFiles().getSingleFile()
+        if (file.canWrite()) {
+            file.write(data)
+        }
+        // 写入版本信息到 XML 文件
+
+    }
+}
+
+task readTask {
+    // 2、指定输入文件为上一个 task（writeTask） 的输出文件 destFile
+    inputs.file destFile
+    doLast {
+        //读取输入文件的内容并显示
+        def file = inputs.files.singleFile
+        println file.text
+    }
+}
+
+task outputwithinputTask {
+    // 3、先执行写入，再执行读取
+    dependsOn readTask, writeTask
+    doLast {
+        println '输入输出任务结束'
+    }
+}
